@@ -6,6 +6,8 @@
 
 ### 公众号<阿杰的人生路>回复"Auto-GPT"加入群聊，共同探讨更多玩法
 
+推荐工具：[【稳定，高速梯子推荐56一年，活动时5折，点击直达】](https://www.hjtnt.pro/auth/register?code=hwWF)
+
 ### 中文版Demo :
 
 ![Demo video](docs/imgs/demo.gif)
@@ -91,7 +93,7 @@ pip install -r requirements.txt
 
 ## 终端代理方法
 
-推荐工具：[【稳定，高速梯子推荐56一年，活动时5折，点击直达】](https://www.hjtnt.pro/auth/register?code=QRY5)
+推荐工具：[【稳定，高速梯子推荐56一年，活动时5折，点击直达】](https://www.hjtnt.pro/auth/register?code=hwWF)
 
 Mac 下载 [ClashX Pro](https://install.appcenter.ms/users/clashx/apps/clashx-pro/distribution_groups/public) 设置 系统代理 增强模式 然后复制终端代理命令 在终端中输入，重启即可
 

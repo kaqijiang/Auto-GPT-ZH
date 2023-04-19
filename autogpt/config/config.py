@@ -1,20 +1,19 @@
 """Configuration class to store the state of bools for different scripts access."""
 import os
-from colorama import Fore
-
-from autogpt.config.singleton import Singleton
 
 import openai
 import yaml
-
+from colorama import Fore
 from dotenv import load_dotenv
+
+from autogpt.config.singleton import Singleton
 
 load_dotenv(verbose=True)
 
 
 class Config(metaclass=Singleton):
     """
-    用于存储不同脚本访问的 bool 状态的配置类。
+    Configuration class to store the state of bools for different scripts access.
     """
 
     def __init__(self) -> None:
@@ -24,6 +23,7 @@ class Config(metaclass=Singleton):
         self.continuous_limit = 0
         self.speak_mode = False
         self.skip_reprompt = False
+        self.allow_downloads = False
 
         self.selenium_web_browser = os.getenv("USE_WEB_BROWSER", "chrome")
         self.ai_settings_file = os.getenv("AI_SETTINGS_FILE", "ai_settings.yaml")
@@ -32,7 +32,6 @@ class Config(metaclass=Singleton):
         self.fast_token_limit = int(os.getenv("FAST_TOKEN_LIMIT", 4000))
         self.smart_token_limit = int(os.getenv("SMART_TOKEN_LIMIT", 8000))
         self.browse_chunk_max_length = int(os.getenv("BROWSE_CHUNK_MAX_LENGTH", 8192))
-        self.browse_summary_max_token = int(os.getenv("BROWSE_SUMMARY_MAX_TOKEN", 300))
 
         self.openai_api_key = os.getenv("OPENAI_API_KEY")
         self.temperature = float(os.getenv("TEMPERATURE", "1"))
@@ -66,7 +65,7 @@ class Config(metaclass=Singleton):
         self.pinecone_api_key = os.getenv("PINECONE_API_KEY")
         self.pinecone_region = os.getenv("PINECONE_ENV")
 
-        self.weaviate_host  = os.getenv("WEAVIATE_HOST")
+        self.weaviate_host = os.getenv("WEAVIATE_HOST")
         self.weaviate_port = os.getenv("WEAVIATE_PORT")
         self.weaviate_protocol = os.getenv("WEAVIATE_PROTOCOL", "http")
         self.weaviate_username = os.getenv("WEAVIATE_USERNAME", None)
@@ -74,7 +73,9 @@ class Config(metaclass=Singleton):
         self.weaviate_scopes = os.getenv("WEAVIATE_SCOPES", None)
         self.weaviate_embedded_path = os.getenv("WEAVIATE_EMBEDDED_PATH")
         self.weaviate_api_key = os.getenv("WEAVIATE_API_KEY", None)
-        self.use_weaviate_embedded = os.getenv("USE_WEAVIATE_EMBEDDED", "False") == "True"
+        self.use_weaviate_embedded = (
+            os.getenv("USE_WEAVIATE_EMBEDDED", "False") == "True"
+        )
 
         # milvus configuration, e.g., localhost:19530.
         self.milvus_addr = os.getenv("MILVUS_ADDR", "localhost:19530")
@@ -155,76 +156,72 @@ class Config(metaclass=Singleton):
         )
         self.azure_model_to_deployment_id_map = config_params.get("azure_model_map", [])
 
-    def set_continuous_mode(self, value: bool):
-        """设置连续模式状态。"""
+    def set_continuous_mode(self, value: bool) -> None:
+        """Set the continuous mode value."""
         self.continuous_mode = value
 
     def set_continuous_limit(self, value: int) -> None:
         """Set the continuous limit value."""
         self.continuous_limit = value
 
-    def set_speak_mode(self, value: bool):
-        """设置说话模式状态。"""
+    def set_speak_mode(self, value: bool) -> None:
+        """Set the speak mode value."""
         self.speak_mode = value
 
-    def set_fast_llm_model(self, value: str):
-        """设置快速 LLM 模型值。"""
+    def set_fast_llm_model(self, value: str) -> None:
+        """Set the fast LLM model value."""
         self.fast_llm_model = value
 
-    def set_smart_llm_model(self, value: str):
-        """设置smart LLM模型值。"""
+    def set_smart_llm_model(self, value: str) -> None:
+        """Set the smart LLM model value."""
         self.smart_llm_model = value
 
-    def set_fast_token_limit(self, value: int):
-        """设置fast token快速令牌限制值。"""
+    def set_fast_token_limit(self, value: int) -> None:
+        """Set the fast token limit value."""
         self.fast_token_limit = value
 
-    def set_smart_token_limit(self, value: int):
-        """设置smart token令牌限值。"""
+    def set_smart_token_limit(self, value: int) -> None:
+        """Set the smart token limit value."""
         self.smart_token_limit = value
 
     def set_browse_chunk_max_length(self, value: int) -> None:
         """Set the browse_website command chunk max length value."""
         self.browse_chunk_max_length = value
 
-    def set_browse_summary_max_token(self, value: int) -> None:
-        """Set the browse_website command summary max token value."""
-        self.browse_summary_max_token = value
-
-    def set_openai_api_key(self, value: str):
-        """设置OpenAI API密钥值。."""
+    def set_openai_api_key(self, value: str) -> None:
+        """Set the OpenAI API key value."""
         self.openai_api_key = value
 
-    def set_elevenlabs_api_key(self, value: str):
-        """设置ElevenLabs API密钥值。"""
+    def set_elevenlabs_api_key(self, value: str) -> None:
+        """Set the ElevenLabs API key value."""
         self.elevenlabs_api_key = value
 
-    def set_elevenlabs_voice_1_id(self, value: str):
-        """设置ElevenLabs Voice 1 ID值"""
+    def set_elevenlabs_voice_1_id(self, value: str) -> None:
+        """Set the ElevenLabs Voice 1 ID value."""
         self.elevenlabs_voice_1_id = value
 
-    def set_elevenlabs_voice_2_id(self, value: str):
-        """设置ElevenLabs Voice 2 ID值"""
+    def set_elevenlabs_voice_2_id(self, value: str) -> None:
+        """Set the ElevenLabs Voice 2 ID value."""
         self.elevenlabs_voice_2_id = value
 
-    def set_google_api_key(self, value: str):
-        """设置Google API密钥值."""
+    def set_google_api_key(self, value: str) -> None:
+        """Set the Google API key value."""
         self.google_api_key = value
 
-    def set_custom_search_engine_id(self, value: str):
-        """设置自定义搜索引擎ID值。."""
+    def set_custom_search_engine_id(self, value: str) -> None:
+        """Set the custom search engine id value."""
         self.custom_search_engine_id = value
 
-    def set_pinecone_api_key(self, value: str):
-        """设置Pinecone API密钥值."""
+    def set_pinecone_api_key(self, value: str) -> None:
+        """Set the Pinecone API key value."""
         self.pinecone_api_key = value
 
-    def set_pinecone_region(self, value: str):
-        """设置Pinecone地区值."""
+    def set_pinecone_region(self, value: str) -> None:
+        """Set the Pinecone region value."""
         self.pinecone_region = value
 
-    def set_debug_mode(self, value: bool):
-        """设置调试模式值."""
+    def set_debug_mode(self, value: bool) -> None:
+        """Set the debug mode value."""
         self.debug_mode = value
 
 
@@ -236,5 +233,5 @@ def check_openai_api_key() -> None:
             Fore.RED
             + "Please set your OpenAI API key in .env or as an environment variable."
         )
-        print("You can get your key from https://beta.openai.com/account/api-keys")
+        print("You can get your key from https://platform.openai.com/account/api-keys")
         exit(1)

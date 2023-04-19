@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import dataclasses
 import os
-from typing import Any
+from typing import Any, List
 
 import numpy as np
 import orjson
 
-from autogpt.memory.base import MemoryProviderSingleton
 from autogpt.llm_utils import create_embedding_with_ada
+from autogpt.memory.base import MemoryProviderSingleton
 
 EMBED_DIM = 1536
 SAVE_OPTIONS = orjson.OPT_SERIALIZE_NUMPY | orjson.OPT_SERIALIZE_DATACLASS
@@ -50,11 +50,12 @@ class LocalCache(MemoryProviderSingleton):
                     loaded = orjson.loads(file_content)
                     self.data = CacheContent(**loaded)
             except orjson.JSONDecodeError:
-                print(f"Error: 文件 '{self.filename}' 不是json格式.")
+                print(f"Error: The file '{self.filename}' is not in JSON format.")
                 self.data = CacheContent()
         else:
             print(
-                f"Warning: 文件 '{self.filename}' 不存在. 本地内存不会保存到文件中。."
+                f"Warning: The file '{self.filename}' does not exist. "
+                "Local memory would not be saved to a file."
             )
             self.data = CacheContent()
 

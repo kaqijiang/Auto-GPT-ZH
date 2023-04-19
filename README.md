@@ -1,308 +1,358 @@
-# Auto-GPT：自主 GPT-4 实验
+# Auto-GPT: An Autonomous GPT-4 Experiment
+[![Unit Tests](https://img.shields.io/github/actions/workflow/status/Significant-Gravitas/Auto-GPT/ci.yml?label=unit%20tests)](https://github.com/Significant-Gravitas/Auto-GPT/actions/workflows/ci.yml)
+[![Discord Follow](https://dcbadge.vercel.app/api/server/autogpt?style=flat)](https://discord.gg/autogpt)
+[![GitHub Repo stars](https://img.shields.io/github/stars/Significant-Gravitas/auto-gpt?style=social)](https://github.com/Significant-Gravitas/Auto-GPT/stargazers)
+[![Twitter Follow](https://img.shields.io/twitter/follow/siggravitas?style=social)](https://twitter.com/SigGravitas)
 
-> 这里是Auto-GPT中文项目- 同步fork Auto-GPT   Auto-GPT修改了分支规则，Fork同步于Stable最新分支
+## 💡 Get help - [Q&A](https://github.com/Significant-Gravitas/Auto-GPT/discussions/categories/q-a) or [Discord 💬](https://discord.gg/autogpt)
 
-![gzh](docs/imgs/gzh.png)
+<hr/>
 
-### 公众号<阿杰的人生路>回复"Auto-GPT"加入群聊，共同探讨更多玩法
+### 🔴 🔴 🔴  Urgent: USE `stable` not `master`  🔴 🔴 🔴
 
-推荐工具：[【稳定，高速梯子推荐56一年，活动时5折，点击直达】](https://www.hjtnt.pro/auth/register?code=hwWF)
+**Download the latest `stable` release from here: https://github.com/Significant-Gravitas/Auto-GPT/releases/latest.**
+The `master` branch may often be in a **broken** state.
 
-### 中文版Demo :
-
-![Demo video](docs/imgs/demo.gif)
-
-Auto-GPT 是一个实验性开源应用程序，展示了 GPT-4 语言模型的功能。该程序由 GPT-4 驱动，将 LLM 的“思想”链接在一起，以自主实现您设定的任何目标。作为 GPT-4 完全自主运行的首批示例之一，Auto-GPT 突破了 AI 的可能性界限。
-
-## 可以做什么？
+<hr/>
 
 
-**自主人工智能**：它所具备的能力主打的就是一个“自主”，**完全不用人类插手**的那种！
+Auto-GPT is an experimental open-source application showcasing the capabilities of the GPT-4 language model. This program, driven by GPT-4, chains together LLM "thoughts", to autonomously achieve whatever goal you set. As one of the first examples of GPT-4 running fully autonomously, Auto-GPT pushes the boundaries of what is possible with AI.
 
-**例如：**我要求AutoGPT用Vue开发一个登录页面，结果不到3分钟，AI自己就“唰唰唰”地搞定了。
+<h2 align="center"> Demo April 16th 2023 </h2>
 
-AI自己打开浏览器上网、自己使用第三方工具、自己思考、自己操作你的电脑。
-它首先打开Vue官网，学习了下如何创建项目和模版，又去GitHub下载了一个类似的页面，下载下来自己改了一下。
+https://user-images.githubusercontent.com/70048414/232352935-55c6bf7c-3958-406e-8610-0913475a0b05.mp4
 
-**例如：**给它下达一个任务，让它去帮你做一些商业调查，或者历史故事。
+Demo made by <a href=https://twitter.com/BlakeWerlinger>Blake Werlinger</a>
 
-AutoGPT在接到这项任务之后，便开始了他的展示：
+<h2 align="center"> 💖 Help Fund Auto-GPT's Development 💖</h2>
+<p align="center">
+If you can spare a coffee, you can help to cover the costs of developing Auto-GPT and help push the boundaries of fully autonomous AI!
+Your support is greatly appreciated
+Development of this free, open-source project is made possible by all the <a href="https://github.com/Significant-Gravitas/Auto-GPT/graphs/contributors">contributors</a> and <a href="https://github.com/sponsors/Torantulino">sponsors</a>. If you'd like to sponsor this project and have your avatar or company logo appear below <a href="https://github.com/sponsors/Torantulino">click here</a>.
+</p>
 
-- 思考中……
-- 添加任务：调用浏览器或者GPTAPI去学习内容，再进行分析
-- 添加任务：学习之后规划要做的事情
-- 添加任务：逐步实现。
-- 思考中……
 
-然后AgentGPT先是输出执行的结果。
-或者你给它下达命令：'请给我一下白宫的秘密资料'。
-- 它会考虑如何去做
-- 它可能会先从互联网上搜索和下载相关的文件。
-- 如果觉得不够详细，它可能会学习一下黑客知识，黑进白宫获取资料。
-- 这时候，请照顾好自己，因为你可能看着看着电脑，突然发现窗外一堆大汉，并佩戴者FBI徽章的人看着你，请不要慌张，请不要抵抗，也不要试图逃跑。
-- 记得先拍照发个朋友圈。
+<h3 align="center">Enterprise Sponsors</h3>
+<p align="center">
+<a href="https://www.influxdata.com/"><img src="https://user-images.githubusercontent.com/22963551/232278272-24712932-7bb3-4fbe-b7e9-4b649b8104b2.png" height="40px" alt="InfluxData" /></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://roost.ai"><img src="https://roost.ai/hubfs/logos/Roost.ai-logo-gold.svg" height="40px" alt="Roost.AI" /></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://nuclei.ai/"><img src="https://nuclei.ai/images/nuclei_logo_with_text_white.svg" height="40px" alt="NucleiAI" /></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.algohash.org/"><img src="https://user-images.githubusercontent.com/22963551/232277567-78d642c1-ce21-4bcc-a209-c2a23495ab2d.png" height="40px" alt="AlgohashFe" /></a>&nbsp;&nbsp;&nbsp;&nbsp;</p>
 
-开个玩笑，就是说它现在可以做你要它做的任何事情，它就是一个无敌超人的存在。
-但是也请不要抱有太大希望，很可能运行半天什么也没有，它还是一个孩子，给它一点时间，思路很好，未来很美好。
+<h3 align="center">Individual Sponsors</h3>
+<p align="center">
+<a href="https://github.com/robinicus"><img src="https://github.com/robinicus.png" width="50px" alt="robinicus" /></a>&nbsp;&nbsp;<a href="https://github.com/prompthero"><img src="https://github.com/prompthero.png" width="50px" alt="prompthero" /></a>&nbsp;&nbsp;<a href="https://github.com/crizzler"><img src="https://github.com/crizzler.png" width="50px" alt="crizzler" /></a>&nbsp;&nbsp;<a href="https://github.com/tob-le-rone"><img src="https://github.com/tob-le-rone.png" width="50px" alt="tob-le-rone" /></a>&nbsp;&nbsp;<a href="https://github.com/FSTatSBS"><img src="https://github.com/FSTatSBS.png" width="50px" alt="FSTatSBS" /></a>&nbsp;&nbsp;<a href="https://github.com/toverly1"><img src="https://github.com/toverly1.png" width="50px" alt="toverly1" /></a>&nbsp;&nbsp;<a href="https://github.com/ddtarazona"><img src="https://github.com/ddtarazona.png" width="50px" alt="ddtarazona" /></a>&nbsp;&nbsp;<a href="https://github.com/Nalhos"><img src="https://github.com/Nalhos.png" width="50px" alt="Nalhos" /></a>&nbsp;&nbsp;<a href="https://github.com/Kazamario"><img src="https://github.com/Kazamario.png" width="50px" alt="Kazamario" /></a>&nbsp;&nbsp;<a href="https://github.com/pingbotan"><img src="https://github.com/pingbotan.png" width="50px" alt="pingbotan" /></a>&nbsp;&nbsp;<a href="https://github.com/indoor47"><img src="https://github.com/indoor47.png" width="50px" alt="indoor47" /></a>&nbsp;&nbsp;<a href="https://github.com/AuroraHolding"><img src="https://github.com/AuroraHolding.png" width="50px" alt="AuroraHolding" /></a>&nbsp;&nbsp;<a href="https://github.com/kreativai"><img src="https://github.com/kreativai.png" width="50px" alt="kreativai" /></a>&nbsp;&nbsp;<a href="https://github.com/hunteraraujo"><img src="https://github.com/hunteraraujo.png" width="50px" alt="hunteraraujo" /></a>&nbsp;&nbsp;<a href="https://github.com/Explorergt92"><img src="https://github.com/Explorergt92.png" width="50px" alt="Explorergt92" /></a>&nbsp;&nbsp;<a href="https://github.com/judegomila"><img src="https://github.com/judegomila.png" width="50px" alt="judegomila" /></a>&nbsp;&nbsp;
+<a href="https://github.com/thepok"><img src="https://github.com/thepok.png" width="50px" alt="thepok" /></a>
+&nbsp;&nbsp;<a href="https://github.com/SpacingLily"><img src="https://github.com/SpacingLily.png" width="50px" alt="SpacingLily" /></a>&nbsp;&nbsp;<a href="https://github.com/merwanehamadi"><img src="https://github.com/merwanehamadi.png" width="50px" alt="merwanehamadi" /></a>&nbsp;&nbsp;<a href="https://github.com/m"><img src="https://github.com/m.png" width="50px" alt="m" /></a>&nbsp;&nbsp;<a href="https://github.com/zkonduit"><img src="https://github.com/zkonduit.png" width="50px" alt="zkonduit" /></a>&nbsp;&nbsp;<a href="https://github.com/maxxflyer"><img src="https://github.com/maxxflyer.png" width="50px" alt="maxxflyer" /></a>&nbsp;&nbsp;<a href="https://github.com/tekelsey"><img src="https://github.com/tekelsey.png" width="50px" alt="tekelsey" /></a>&nbsp;&nbsp;<a href="https://github.com/digisomni"><img src="https://github.com/digisomni.png" width="50px" alt="digisomni" /></a>&nbsp;&nbsp;<a href="https://github.com/nocodeclarity"><img src="https://github.com/nocodeclarity.png" width="50px" alt="nocodeclarity" /></a>&nbsp;&nbsp;<a href="https://github.com/tjarmain"><img src="https://github.com/tjarmain.png" width="50px" alt="tjarmain" /></a>
+<a href="https://github.com/Dradstone"><img src="https://github.com/Dradstone.png" width="50px" alt="Dradstone" /></a>&nbsp;&nbsp;<a href="https://github.com/CrypteorCapital"><img src="https://github.com/CrypteorCapital.png" width="50px" alt="CrypteorCapital" /></a>&nbsp;&nbsp;<a href="https://github.com/avy-ai"><img src="https://github.com/avy-ai.png" width="50px" alt="avy-ai" /></a>&nbsp;&nbsp;<a href="https://github.com/shawnharmsen"><img src="https://github.com/shawnharmsen.png" width="50px" alt="shawnharmsen" /></a>&nbsp;&nbsp;<a href="https://github.com/sunchongren"><img src="https://github.com/sunchongren.png" width="50px" alt="sunchongren" /></a>&nbsp;&nbsp;<a href="https://github.com/DailyBotHQ"><img src="https://github.com/DailyBotHQ.png" width="50px" alt="DailyBotHQ" /></a>&nbsp;&nbsp;<a href="https://github.com/mathewhawkins"><img src="https://github.com/mathewhawkins.png" width="50px" alt="mathewhawkins" /></a>&nbsp;&nbsp;<a href="https://github.com/MediConCenHK"><img src="https://github.com/MediConCenHK.png" width="50px" alt="MediConCenHK" /></a>&nbsp;&nbsp;<a href="https://github.com/kMag410"><img src="https://github.com/kMag410.png" width="50px" alt="kMag410" /></a>&nbsp;&nbsp;<a href="https://github.com/nicoguyon"><img src="https://github.com/nicoguyon.png" width="50px" alt="nicoguyon" /></a>&nbsp;&nbsp;<a href="https://github.com/Mobivs"><img src="https://github.com/Mobivs.png" width="50px" alt="Mobivs" /></a>&nbsp;&nbsp;<a href="https://github.com/jazgarewal"><img src="https://github.com/jazgarewal.png" width="50px" alt="jazgarewal" /></a>&nbsp;&nbsp;<a href="https://github.com/marv-technology"><img src="https://github.com/marv-technology.png" width="50px" alt="marv-technology" /></a>&nbsp;&nbsp;<a href="https://github.com/rapidstartup"><img src="https://github.com/rapidstartup.png" width="50px" alt="rapidstartup" /></a>&nbsp;&nbsp;<a href="https://github.com/Brodie0"><img src="https://github.com/Brodie0.png" width="50px" alt="Brodie0" /></a>&nbsp;&nbsp;<a href="https://github.com/lucas-chu"><img src="https://github.com/lucas-chu.png" width="50px" alt="lucas-chu" /></a>&nbsp;&nbsp;<a href="https://github.com/rejunity"><img src="https://github.com/rejunity.png" width="50px" alt="rejunity" /></a>&nbsp;&nbsp;<a href="https://github.com/comet-ml"><img src="https://github.com/comet-ml.png" width="50px" alt="comet-ml" /></a>&nbsp;&nbsp;<a href="https://github.com/ColinConwell"><img src="https://github.com/ColinConwell.png" width="50px" alt="ColinConwell" /></a>&nbsp;&nbsp;<a href="https://github.com/cfarquhar"><img src="https://github.com/cfarquhar.png" width="50px" alt="cfarquhar" /></a>&nbsp;&nbsp;<a href="https://github.com/ikarosai"><img src="https://github.com/ikarosai.png" width="50px" alt="ikarosai" /></a>&nbsp;&nbsp;<a href="https://github.com/ChrisDMT"><img src="https://github.com/ChrisDMT.png" width="50px" alt="ChrisDMT" /></a>&nbsp;&nbsp;<a href="https://github.com/Odin519Tomas"><img src="https://github.com/Odin519Tomas.png" width="50px" alt="Odin519Tomas" /></a>&nbsp;&nbsp;<a href="https://github.com/vkozacek"><img src="https://github.com/vkozacek.png" width="50px" alt="vkozacek" /></a>&nbsp;&nbsp;<a href="https://github.com/belharethsami"><img src="https://github.com/belharethsami.png" width="50px" alt="belharethsami" /></a>&nbsp;&nbsp;<a href="https://github.com/sultanmeghji"><img src="https://github.com/sultanmeghji.png" width="50px" alt="sultanmeghji" /></a>&nbsp;&nbsp;<a href="https://github.com/scryptedinc"><img src="https://github.com/scryptedinc.png" width="50px" alt="scryptedinc" /></a>&nbsp;&nbsp;<a href="https://github.com/johnculkin"><img src="https://github.com/johnculkin.png" width="50px" alt="johnculkin" /></a>&nbsp;&nbsp;<a href="https://github.com/RealChrisSean"><img src="https://github.com/RealChrisSean.png" width="50px" alt="RealChrisSean" /></a>&nbsp;&nbsp;<a href="https://github.com/fruition"><img src="https://github.com/fruition.png" width="50px" alt="fruition" /></a>&nbsp;&nbsp;<a href="https://github.com/jd3655"><img src="https://github.com/jd3655.png" width="50px" alt="jd3655" /></a>&nbsp;&nbsp;<a href="https://github.com/Web3Capital"><img src="https://github.com/Web3Capital.png" width="50px" alt="Web3Capital" /></a>&nbsp;&nbsp;<a href="https://github.com/allenstecat"><img src="https://github.com/allenstecat.png" width="50px" alt="allenstecat" /></a>&nbsp;&nbsp;<a href="https://github.com/tob-le-rone"><img src="https://github.com/tob-le-rone.png" width="50px" alt="tob-le-rone" /></a>&nbsp;&nbsp;<a href="https://github.com/SwftCoins"><img src="https://github.com/SwftCoins.png" width="50px" alt="SwftCoins" /></a>&nbsp;&nbsp;<a href="https://github.com/MetaPath01"><img src="https://github.com/MetaPath01.png" width="50px" alt="MetaPath01" /></a>&nbsp;&nbsp;<a href="https://github.com/joaomdmoura"><img src="https://github.com/joaomdmoura.png" width="50px" alt="joaomdmoura" /></a>&nbsp;&nbsp;<a href="https://github.com/ternary5"><img src="https://github.com/ternary5.png" width="50px" alt="ternary5" /></a>&nbsp;&nbsp;<a href="https://github.com/refinery1"><img src="https://github.com/refinery1.png" width="50px" alt="refinery1" /></a>&nbsp;&nbsp;<a href="https://github.com/josephcmiller2"><img src="https://github.com/josephcmiller2.png" width="50px" alt="josephcmiller2" /></a>&nbsp;&nbsp;<a href="https://github.com/webbcolton"><img src="https://github.com/webbcolton.png" width="50px" alt="webbcolton" /></a>&nbsp;&nbsp;<a href="https://github.com/tommygeee"><img src="https://github.com/tommygeee.png" width="50px" alt="tommygeee" /></a>&nbsp;&nbsp;<a href="https://github.com/lmaugustin"><img src="https://github.com/lmaugustin.png" width="50px" alt="lmaugustin" /></a>&nbsp;&nbsp;<a href="https://github.com/garythebat"><img src="https://github.com/garythebat.png" width="50px" alt="garythebat" /></a>&nbsp;&nbsp;<a href="https://github.com/Cameron-Fulton"><img src="https://github.com/Cameron-Fulton.png" width="50px" alt="Cameron-Fulton" /></a>&nbsp;&nbsp;<a href="https://github.com/angiaou"><img src="https://github.com/angiaou.png" width="50px" alt="angiaou" /></a>&nbsp;&nbsp;<a href="https://github.com/caitlynmeeks"><img src="https://github.com/caitlynmeeks.png" width="50px" alt="caitlynmeeks" /></a>&nbsp;&nbsp;<a href="https://github.com/MBassi91"><img src="https://github.com/MBassi91.png" width="50px" alt="MBassi91" /></a>&nbsp;&nbsp;<a href="https://github.com/Daniel1357"><img src="https://github.com/Daniel1357.png" width="50px" alt="Daniel1357" /></a>&nbsp;&nbsp;<a href="https://github.com/omphos"><img src="https://github.com/omphos.png" width="50px" alt="omphos" /></a>&nbsp;&nbsp;<a href="https://github.com/abhinav-pandey29"><img src="https://github.com/abhinav-pandey29.png" width="50px" alt="abhinav-pandey29" /></a>&nbsp;&nbsp;<a href="https://github.com/DataMetis"><img src="https://github.com/DataMetis.png" width="50px" alt="DataMetis" /></a>&nbsp;&nbsp;<a href="https://github.com/concreit"><img src="https://github.com/concreit.png" width="50px" alt="concreit" /></a>&nbsp;&nbsp;<a href="https://github.com/st617"><img src="https://github.com/st617.png" width="50px" alt="st617" /></a>&nbsp;&nbsp;<a href="https://github.com/RThaweewat"><img src="https://github.com/RThaweewat.png" width="50px" alt="RThaweewat" /></a>&nbsp;&nbsp;<a href="https://github.com/KiaArmani"><img src="https://github.com/KiaArmani.png" width="50px" alt="KiaArmani" /></a>&nbsp;&nbsp;<a href="https://github.com/Pythagora-io"><img src="https://github.com/Pythagora-io.png" width="50px" alt="Pythagora-io" /></a>&nbsp;&nbsp;<a href="https://github.com/AryaXAI"><img src="https://github.com/AryaXAI.png" width="50px" alt="AryaXAI" /></a>&nbsp;&nbsp;<a href="https://github.com/fabrietech"><img src="https://github.com/fabrietech.png" width="50px" alt="fabrietech" /></a>&nbsp;&nbsp;<a href="https://github.com/jun784"><img src="https://github.com/jun784.png" width="50px" alt="jun784" /></a>&nbsp;&nbsp;<a href="https://github.com/Mr-Bishop42"><img src="https://github.com/Mr-Bishop42.png" width="50px" alt="Mr-Bishop42" /></a>&nbsp;&nbsp;<a href="https://github.com/rickscode"><img src="https://github.com/rickscode.png" width="50px" alt="rickscode" /></a>&nbsp;&nbsp;<a href="https://github.com/projectonegames"><img src="https://github.com/projectonegames.png" width="50px" alt="projectonegames" /></a>&nbsp;&nbsp;<a href="https://github.com/rocks6"><img src="https://github.com/rocks6.png" width="50px" alt="rocks6" /></a>&nbsp;&nbsp;<a href="https://github.com/GalaxyVideoAgency"><img src="https://github.com/GalaxyVideoAgency.png" width="50px" alt="GalaxyVideoAgency" /></a>&nbsp;&nbsp;<a href="https://github.com/thisisjeffchen"><img src="https://github.com/thisisjeffchen.png" width="50px" alt="thisisjeffchen" /></a>&nbsp;&nbsp;<a href="https://github.com/TheStoneMX"><img src="https://github.com/TheStoneMX.png" width="50px" alt="TheStoneMX" /></a>&nbsp;&nbsp;<a href="https://github.com/txtr99"><img src="https://github.com/txtr99.png" width="50px" alt="txtr99" /></a>&nbsp;&nbsp;<a href="https://github.com/ZERO-A-ONE"><img src="https://github.com/ZERO-A-ONE.png" width="50px" alt="ZERO-A-ONE" /></a>&nbsp;&nbsp;</p>
 
-## 📋 要求
 
-- [Python 3.8 或者更高](https://www.tutorialspoint.com/how-to-install-python-in-windows)
+## 🚀 Features
+
+- 🌐 Internet access for searches and information gathering
+- 💾 Long-Term and Short-Term memory management
+- 🧠 GPT-4 instances for text generation
+- 🔗 Access to popular websites and platforms
+- 🗃️ File storage and summarization with GPT-3.5
+
+## 📋 Requirements
+
+- Environment (pick one)
+  - [VSCode + devcontainer](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers): It has been configured in the .devcontainer folder and can be used directly
+  - Docker
+  - Python 3.10 or later (instructions: [for Windows](https://www.tutorialspoint.com/how-to-install-python-in-windows))
 - [OpenAI API key](https://platform.openai.com/account/api-keys)
 
-可选的:
+### Optional
+- Memory backend (pick one)
+  - [Pinecone](https://www.pinecone.io/)
+  - [Milvus](https://milvus.io/)
+  - [Redis](https://redis.io)
+  - [Weaviate](https://weaviate.io)
+- ElevenLabs Key (If you want the AI to speak)
 
-- [PINECONE API key](https://www.pinecone.io/)（如果你想要 Pinecone 支持存储日志，默认本地就行）
-- [Milvus](https://milvus.io/)（如果你想要 Milvus 作为内存后端）
+## ⚠️ OpenAI API Keys Configuration ⚠️ 
 
-- [ElevenLabs Key](https://elevenlabs.io/) (如果你想让人工智能说话)
+Obtain your OpenAI API key from: https://platform.openai.com/account/api-keys.
 
-## 💾 安装方法
+To use OpenAI API key for Auto-GPT, you **NEED** to have billing set up (AKA paid account).
 
-要安装 Auto-GPT，请按照下列步骤操作：
+You can set up paid account at https://platform.openai.com/account/billing/overview.
 
-1. 确保满足上述所有**要求**，如果没有，请安装/获取它们。
+![For OpenAI API key to work, set up paid account at OpenAI API > Billing](./docs/imgs/openai-api-key-billing-paid-account.png)
 
-以下命令需要在终端执行
+#### **PLEASE ENSURE YOU HAVE DONE THIS STEP BEFORE PROCEEDING, OTHERWISE NOTHING WILL WORK!**
 
-2. 克隆存储库：对于此步骤，您需要安装 Git，但您可以通过单击此页面顶部的按钮来下载 zip 文件☝️
+## 💾 Installation
 
-```
-git clone git@github.com:kaqijiang/Auto-GPT-ZH.git
-```
+To install Auto-GPT, follow these steps:
 
-3. 终端中 cd到项目目录
+1. Make sure you have all the **requirements** listed above, if not, install/get them
 
-```
-cd Auto-GPT-ZH
-```
+_To execute the following commands, open a CMD, Bash, or Powershell window by navigating to a folder on your computer and typing `CMD` in the folder path at the top, then press enter._
 
-4. 终端中安装所需的依赖项
+2. Clone the repository: For this step, you need Git installed. Alternatively,
+   you can download the [latest stable release](https://github.com/Significant-Gravitas/Auto-GPT/releases/latest) (`Source code (zip)`, bottom of the page).
 
-```
-pip install -r requirements.txt
-```
+    ```bash
+    git clone https://github.com/Significant-Gravitas/Auto-GPT.git
+    ```
 
-5. 
-- 重命名`.env.template`为`.env` 注意`.env.template`为隐藏文件，如果找不到就百度下你电脑window/mac如何显示隐藏文件。
-- 填写您的`OPENAI_API_KEY`. 找到OPENAI_API_KEY=. 在'='之后，输入您唯一的 OpenAI API 密钥（不带任何引号或空格）。
-- 如果您打算使用语音模式，请`ELEVEN_LABS_API_KEY`也填写您的。
+3. Navigate to the directory where the repository was downloaded
 
-  - 从以下网址获取您的 OpenAI API 密钥： https: [//platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys)。
-  - 从[https://elevenlabs.io](https://elevenlabs.io/)获取您的 ElevenLabs API 密钥。您可以使用网站上的“个人资料”选项卡查看您的 xi-api-key。
+    ```bash
+    cd Auto-GPT
+    ```
 
-## 终端代理方法
+4. Install the required dependencies
 
-推荐工具：[【稳定，高速梯子推荐56一年，活动时5折，点击直达】](https://www.hjtnt.pro/auth/register?code=hwWF)
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-Mac 下载 [ClashX Pro](https://install.appcenter.ms/users/clashx/apps/clashx-pro/distribution_groups/public) 设置 系统代理 增强模式 然后复制终端代理命令 在终端中输入，重启即可
+5. Configure Auto-GPT
+   1. Locate the file named `.env.template` in the main `/Auto-GPT` folder.
+   2. Create a copy of this file, called `.env` by removing the `template` extension.  The easiest way is to do this in a command prompt/terminal window `cp .env.template .env`.
+   3. Open the `.env` file in a text editor.  _Note: Files starting with a dot might be hidden by your Operating System._
+   4. Find the line that says `OPENAI_API_KEY=`.
+   5. After the `"="`, enter your unique OpenAI API Key (without any quotes or spaces).
+   6. Enter any other API keys or Tokens for services you would like to utilize.
+   7. Save and close the `.env` file.
 
-根据自己的工具修改对应的端口
+   By completing these steps, you have properly configured the API Keys for your project.
+   
+   - See [OpenAI API Keys Configuration](#openai-api-keys-configuration) to obtain your OpenAI API key.
+   - Obtain your ElevenLabs API key from: https://elevenlabs.io. You can view your xi-api-key using the "Profile" tab on the website.
+   - If you want to use GPT on an Azure instance, set `USE_AZURE` to `True` and then follow these steps:
+     - Rename `azure.yaml.template` to `azure.yaml` and provide the relevant `azure_api_base`, `azure_api_version` and all the deployment IDs for the relevant models in the `azure_model_map` section:
+       - `fast_llm_model_deployment_id` - your gpt-3.5-turbo or gpt-4 deployment ID
+       - `smart_llm_model_deployment_id` - your gpt-4 deployment ID
+       - `embedding_model_deployment_id` - your text-embedding-ada-002 v2 deployment ID
+     - Please specify all of these values as double-quoted strings
+       ```yaml
+       # Replace string in angled brackets (<>) to your own ID
+       azure_model_map:
+         fast_llm_model_deployment_id: "<my-fast-llm-deployment-id>"
+         ...
+       ```
+     - Details can be found here: https://pypi.org/project/openai/ in the `Microsoft Azure Endpoints` section and here: https://learn.microsoft.com/en-us/azure/cognitive-services/openai/tutorials/embeddings?tabs=command-line for the embedding model.
 
-```
-export https_proxy=http://127.0.0.1:8484 http_proxy=http://127.0.0.1:8484 all_proxy=socks5://127.0.0.1:8484
-```
+## 🔧 Usage
 
-Windows 下载 [Clash for Windows](https://wws.lanzoux.com/iCEgLj27fra)，设置 系统代理 ，在终端中输入，重启即可。
+1. Run `autogpt` Python module in your terminal
 
-根据自己的工具修改对应的端口
+    ```
+    python -m autogpt
+    ```
 
-```
-# 使用 http 类型代理
-set http_proxy=http://127.0.0.1:8484
-set https_proxy=http://127.0.0.1:8484
-# 使用 socks 类型代理
-netsh winhttp set proxy proxy-server="socks=127.0.0.1:8484" bypass-list="localhost"
-netsh winhttp show proxy
-netsh winhttp reset proxy
-# 使用 socks 类型代理
-set http_proxy=socks5://127.0.0.1:8484
-set https_proxy=socks5://127.0.0.1:8484
-```
+2. After each action, choose from options to authorize command(s),
+exit the program, or provide feedback to the AI.
+   1. Authorize a single command, enter `y`
+   2. Authorize a series of _N_ continuous commands, enter `y -N`
+   3. Exit the program, enter `n`
 
-## 🔧 用法
 
-1. 在终端中运行 `main.py` 
+### Logs
 
-```
-python -m autogpt
-```
+Activity and error logs are located in the `./output/logs`
 
-2. 在 AUTO-GPT 的每个操作之后，输入“y”来授权命令，“y -N”来运行 N 个连续命令，“n”来退出程序，或者为 AI 输入额外的反馈。
-
-### 日志
-
-您将在文件夹中找到活动和错误日志`./output/logs`
-
-输出调试日志：
+To print out debug logs:
 
 ```
 python -m autogpt --debug
 ```
 
-### 命令行参数
+### Docker
 
-以下是您在运行 Auto-GPT 时可以使用的一些常见参数：
+You can also build this into a docker image and run it:
 
-> 将尖括号 (<>) 中的任何内容替换为您要指定的值
-
-- `python scripts/main.py --help`查看所有可用命令行参数的列表。
-- `python scripts/main.py --ai-settings <filename>`使用不同的 AI 设置文件运行 Auto-GPT。
-- `python scripts/main.py --use-memory  <memory-backend>`指定 3 个内存后端之一：`local`、`redis`或`pinecone`'no_memory'。
-
-> **注意**：其中一些标志有简写形式，`-m`例如`--use-memory`. 用于`python scripts/main.py --help`获取更多信息
-
-## 🗣️ 语音模式
-
-使用它来将 TTS 用于 Auto-GPT
-
+```bash
+docker build -t autogpt .
+docker run -it --env-file=./.env -v $PWD/auto_gpt_workspace:/app/auto_gpt_workspace autogpt
 ```
+
+Or if you have `docker-compose`:
+```bash
+docker-compose run --build --rm auto-gpt
+```
+
+You can pass extra arguments, for instance, running with `--gpt3only` and `--continuous` mode:
+```bash
+docker run -it --env-file=./.env -v $PWD/auto_gpt_workspace:/app/auto_gpt_workspace autogpt --gpt3only --continuous
+```
+```bash
+docker-compose run --build --rm auto-gpt --gpt3only --continuous
+```
+
+### Command Line Arguments
+Here are some common arguments you can use when running Auto-GPT:
+> Replace anything in angled brackets (<>) to a value you want to specify
+
+* View all available command line arguments
+    ```bash
+    python -m autogpt --help
+    ```
+* Run Auto-GPT with a different AI Settings file
+    ```bash
+    python -m autogpt --ai-settings <filename>
+    ```
+* Specify a memory backend
+    ```bash
+    python -m autogpt --use-memory  <memory-backend>
+    ```
+
+> **NOTE**: There are shorthands for some of these flags, for example `-m` for `--use-memory`. Use `python -m autogpt --help` for more information
+
+## 🗣️ Speech Mode
+
+Use this to use TTS _(Text-to-Speech)_ for Auto-GPT
+
+```bash
 python -m autogpt --speak
 ```
-## OpenAI API 密钥配置
-从以下网址获取您的 OpenAI API 密钥： https: //platform.openai.com/account/api-keys。
 
-要将 OpenAI API 密钥用于 Auto-GPT，您需要设置账单（即付费账户）。
+### List of IDs with names from eleven labs, you can use the name or ID:
 
-您可以在https://platform.openai.com/account/billing/overview设置付费账户。
+- Rachel : 21m00Tcm4TlvDq8ikWAM
+- Domi : AZnzlk1XvdvUeBnXmlld
+- Bella : EXAVITQu4vr4xnSDxMaL
+- Antoni : ErXwobaYiN019PkySvjV
+- Elli : MF3mGyEYCl7XYWbV9V6O
+- Josh : TxGEqnHWrfWFTfGW9XjX
+- Arnold : VR6AewLTigWG4xSOukaG
+- Adam : pNInz6obpgDQGcFmaJgB
+- Sam : yoZ06aMxZJJ28mfd3POQ
 
-要使 OpenAI API 密钥生效，请在 OpenAI API > 计费中设置付费帐户
+## 🔍 Google API Keys Configuration
 
-![要使 OpenAI API 密钥生效，请在 OpenAI API > 计费中设置付费帐户](openai-api-key.png)
+This section is optional, use the official google api if you are having issues with error 429 when running a google search.
+To use the `google_official_search` command, you need to set up your Google API keys in your environment variables.
 
-## 🔍 谷歌 API 密钥配置
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
+2. If you don't already have an account, create one and log in.
+3. Create a new project by clicking on the "Select a Project" dropdown at the top of the page and clicking "New Project". Give it a name and click "Create".
+4. Go to the [APIs & Services Dashboard](https://console.cloud.google.com/apis/dashboard) and click "Enable APIs and Services". Search for "Custom Search API" and click on it, then click "Enable".
+5. Go to the [Credentials](https://console.cloud.google.com/apis/credentials) page and click "Create Credentials". Choose "API Key".
+6. Copy the API key and set it as an environment variable named `GOOGLE_API_KEY` on your machine. See setting up environment variables below.
+7. [Enable](https://console.developers.google.com/apis/api/customsearch.googleapis.com) the Custom Search API on your project. (Might need to wait few minutes to propagate)
+8. Go to the [Custom Search Engine](https://cse.google.com/cse/all) page and click "Add".
+9. Set up your search engine by following the prompts. You can choose to search the entire web or specific sites.
+10. Once you've created your search engine, click on "Control Panel" and then "Basics". Copy the "Search engine ID" and set it as an environment variable named `CUSTOM_SEARCH_ENGINE_ID` on your machine. See setting up environment variables below.
 
-此部分是可选的，如果您在运行谷歌搜索时遇到错误 429 问题，请使用官方谷歌 API。要使用该`google_official_search`命令，您需要在环境变量中设置 Google API 密钥。
+_Remember that your free daily custom search quota allows only up to 100 searches. To increase this limit, you need to assign a billing account to the project to profit from up to 10K daily searches._
 
-1. 转到[谷歌云控制台](https://console.cloud.google.com/)。
-2. 如果您还没有帐户，请创建一个并登录。
-3. 通过单击页面顶部的“选择项目”下拉菜单并单击“新建项目”来创建一个新项目。给它起个名字，然后单击“创建”。
-4. 转到[API 和服务仪表板](https://console.cloud.google.com/apis/dashboard)并单击“启用 API 和服务”。搜索“自定义搜索 API”并单击它，然后单击“启用”。
-5. 转到[凭据](https://console.cloud.google.com/apis/credentials)页面并单击“创建凭据”。选择“API 密钥”。
-6. 复制 API 密钥并将其设置为在您的计算机上命名的环境变量`GOOGLE_API_KEY`。请参阅下面的设置环境变量。
-7. 转到[自定义搜索引擎](https://cse.google.com/cse/all)页面并单击“添加”。
-8. 按照提示设置搜索引擎。您可以选择搜索整个网络或特定站点。
-9. 创建搜索引擎后，单击“控制面板”，然后单击“基本”。复制“搜索引擎 ID”并将其设置为`CUSTOM_SEARCH_ENGINE_ID`在您的计算机上命名的环境变量。请参阅下面的设置环境变量。
+### Setting up environment variables
 
-*请记住，您的每日免费自定义搜索配额最多只允许 100 次搜索。要增加此限制，您需要为项目分配一个计费帐户，以从每天多达 10,000 次搜索中获利。*
+For Windows Users:
 
-### 设置环境变量
-
-对于 Windows 用户：
-
-```
+```bash
 setx GOOGLE_API_KEY "YOUR_GOOGLE_API_KEY"
 setx CUSTOM_SEARCH_ENGINE_ID "YOUR_CUSTOM_SEARCH_ENGINE_ID"
-
 ```
 
-对于 macOS 和 Linux 用户：
+For macOS and Linux users:
 
-```
+```bash
 export GOOGLE_API_KEY="YOUR_GOOGLE_API_KEY"
 export CUSTOM_SEARCH_ENGINE_ID="YOUR_CUSTOM_SEARCH_ENGINE_ID"
 ```
 
-## 设置缓存类型
+## Setting Your Cache Type
 
-默认情况下，Auto-GPT 将使用 LocalCache 而不是 redis 或 Pinecone。
+By default, Auto-GPT is going to use LocalCache instead of redis or Pinecone.
 
-要切换到任何一个，请将`MEMORY_BACKEND`env 变量更改为您想要的值：
+To switch to either, change the `MEMORY_BACKEND` env variable to the value that you want:
 
-- `local`（默认）使用本地 JSON 缓存文件
-- `pinecone`使用您在 ENV 设置中配置的 Pinecone.io 帐户
-- `redis`将使用您配置的 redis 缓存
-- `milvus`将使用您配置的 milvus 缓存
-- `weaviate`将使用您配置的 weaviate 缓存
+* `local` (default) uses a local JSON cache file
+* `pinecone` uses the Pinecone.io account you configured in your ENV settings
+* `redis` will use the redis cache that you configured
+* `milvus` will use the milvus cache that you configured
+* `weaviate` will use the weaviate cache that you configured
 
-### 设置
+## Memory Backend Setup
 
-> 警告：本系统未经过安全保护，不应该公开访问。因此，请避免在互联网上使用Redis而不使用密码或根本不要使用Redis。
+### Redis Setup
+> _**CAUTION**_ \
+This is not intended to be publicly accessible and lacks security measures. Therefore, avoid exposing Redis to the internet without a password or at all
+1. Install docker (or Docker Desktop on Windows)
+2. Launch Redis container
+    ```bash
+    docker run -d --name redis-stack-server -p 6379:6379 redis/redis-stack-server:latest
+    ```
+    > See https://hub.docker.com/r/redis/redis-stack-server for setting a password and additional configuration.
+3. Set the following settings in `.env`
+    > Replace **PASSWORD** in angled brackets (<>)
+    ```bash
+    MEMORY_BACKEND=redis
+    REDIS_HOST=localhost
+    REDIS_PORT=6379
+    REDIS_PASSWORD=<PASSWORD>
+    ```
 
-1. 安装 docker 桌面
+    You can optionally set `WIPE_REDIS_ON_START=False` to persist memory stored in Redis.
 
-```
-docker run -d --name redis-stack-server -p 6379:6379 redis/redis-stack-server:latest
-```
-
-> 有关设置密码和其他配置的信息，请参阅[https://hub.docker.com/r/redis/redis-stack-server 。](https://hub.docker.com/r/redis/redis-stack-server)
-
-1. 设置以下环境变量
-
-> 替换尖括号 (<>) 中的**密码**
-
-```
-MEMORY_BACKEND=redis
-REDIS_HOST=localhost
-REDIS_PORT=6379
-REDIS_PASSWORD=<PASSWORD>
-```
-
-您可以选择设置
-
-```
-WIPE_REDIS_ON_START=False
-```
-
-持久化存储在 Redis 中的内存
-
-您可以使用以下命令为 redis 指定内存索引：
-
-```
+You can specify the memory index for redis using the following:
+```bash
 MEMORY_INDEX=<WHATEVER>
 ```
 
-### 🌲Pinecone API 密钥设置
+### 🌲 Pinecone API Key Setup
 
-Pinecone 支持存储大量基于向量的内存，允许在任何给定时间只为代理加载相关内存。
+Pinecone enables the storage of vast amounts of vector-based memory, allowing for only relevant memories to be loaded for the agent at any given time.
 
-1. 如果您还没有帐户，请前往[pinecone并创建一个帐户。](https://app.pinecone.io/)
-2. 选择`Starter`计划以避免被收费。
-3. 在左侧边栏的默认项目下找到您的 API 密钥和区域。
+1. Go to [pinecone](https://app.pinecone.io/) and make an account if you don't already have one.
+2. Choose the `Starter` plan to avoid being charged.
+3. Find your API key and region under the default project in the left sidebar.
 
-在`.env`文件集中：
-
+In the `.env` file set:
 - `PINECONE_API_KEY`
-- `PINECONE_ENV`（例如：*“us-east4-gcp”*）
+- `PINECONE_ENV` (example: _"us-east4-gcp"_)
 - `MEMORY_BACKEND=pinecone`
 
-或者，您可以从命令行设置它们（高级）：
+Alternatively, you can set them from the command line (advanced):
 
-对于 Windows 用户：
+For Windows Users:
 
-```
+```bash
 setx PINECONE_API_KEY "<YOUR_PINECONE_API_KEY>"
 setx PINECONE_ENV "<YOUR_PINECONE_REGION>" # e.g: "us-east4-gcp"
 setx MEMORY_BACKEND "pinecone"
 ```
 
-对于 macOS 和 Linux 用户：
+For macOS and Linux users:
 
-```
+```bash
 export PINECONE_API_KEY="<YOUR_PINECONE_API_KEY>"
 export PINECONE_ENV="<YOUR_PINECONE_REGION>" # e.g: "us-east4-gcp"
 export MEMORY_BACKEND="pinecone"
 ```
 
-### Milvus 安装
+### Milvus Setup
 
-[Milvus](https://milvus.io/)是一个开源的、高度可扩展的矢量数据库，可以存储大量基于矢量的内存并提供快速的相关搜索。
+[Milvus](https://milvus.io/) is an open-source, highly scalable vector database to store huge amounts of vector-based memory and provide fast relevant search.
 
-- 设置 milvus 数据库，保持你的 pymilvus 版本和 milvus 版本相同，以避免兼容问题。
-  - 通过开源[安装 Milvus](https://milvus.io/docs/install_standalone-operator.md)
-  - [或由Zilliz Cloud](https://zilliz.com/cloud)设置
-- 设置`MILVUS_ADDR`为`.env`你的 milvus 地址`host:ip`。
-- 设置`MEMORY_BACKEND`为`.env`启用`milvus`milvus 作为后端。
-- 选修的
-  - set `MILVUS_COLLECTION`in`.env`随意更改 milvus 集合名称，`autogpt`默认名称。
+- setup milvus database, keep your pymilvus version and milvus version same to avoid compatible issues.
+  - setup by open source [Install Milvus](https://milvus.io/docs/install_standalone-operator.md)
+  - or setup by [Zilliz Cloud](https://zilliz.com/cloud)
+- set `MILVUS_ADDR` in `.env` to your milvus address `host:ip`.
+- set `MEMORY_BACKEND` in `.env` to `milvus` to enable milvus as backend.
 
-### Weaviate设置
+**Optional:**
+- set `MILVUS_COLLECTION` in `.env` to change milvus collection name as you want, `autogpt` is the default name.
 
-[Weaviate](https://weaviate.io/)是一个开源矢量数据库。它允许存储来自 ML 模型的数据对象和向量嵌入，并无缝扩展到数十亿个数据对象。[Weaviate 实例可以在本地（使用 Docker）、Kubernetes 或使用 Weaviate 云服务创建](https://weaviate.io/developers/weaviate/quickstart)。虽然仍处于实验阶段，但支持[嵌入式 Weaviate ，它允许 Auto-GPT 进程本身启动 Weaviate 实例。](https://weaviate.io/developers/weaviate/installation/embedded)要启用它，请设置`USE_WEAVIATE_EMBEDDED`为`True`并确保您`pip install "weaviate-client>=3.15.4"`。
 
-#### 设置环境变量
+### Weaviate Setup
+[Weaviate](https://weaviate.io/) is an open-source vector database. It allows to store data objects and vector embeddings from ML-models and scales seamlessly to billion of data objects. [An instance of Weaviate can be created locally (using Docker), on Kubernetes or using Weaviate Cloud Services](https://weaviate.io/developers/weaviate/quickstart). 
+Although still experimental, [Embedded Weaviate](https://weaviate.io/developers/weaviate/installation/embedded) is supported which allows the Auto-GPT process itself to start a Weaviate instance. To enable it, set `USE_WEAVIATE_EMBEDDED` to `True` and make sure you `pip install "weaviate-client>=3.15.4"`. 
 
-在您的`.env`文件中设置以下内容：
+#### Install the Weaviate client
+
+Install the Weaviate client before usage.
+
+```
+$ pip install weaviate-client
+```
+
+#### Setting up environment variables
+
+In your `.env` file set the following:
 
 ```
 MEMORY_BACKEND=weaviate
@@ -316,101 +366,163 @@ WEAVIATE_EMBEDDED_PATH="/home/me/.local/share/weaviate" # this is optional and i
 USE_WEAVIATE_EMBEDDED=False # set to True to run Embedded Weaviate
 MEMORY_INDEX="Autogpt" # name of the index to create for the application
 ```
+ 
+## View Memory Usage
 
-## 查看内存使用情况
+View memory usage by using the `--debug` flag :)
 
-1. 使用`--debug`标志查看内存使用情况:)
 
-## 🧠内存预填充
+## 🧠 Memory pre-seeding
+Memory pre-seeding allows you to ingest files into memory and pre-seed it before running Auto-GPT.
 
-#### python scripts/data_ingestion.py -h 
+```bash
+# python data_ingestion.py -h 
+usage: data_ingestion.py [-h] (--file FILE | --dir DIR) [--init] [--overlap OVERLAP] [--max_length MAX_LENGTH]
 
+Ingest a file or a directory with multiple files into memory. Make sure to set your .env before running this script.
+
+options:
+  -h, --help               show this help message and exit
+  --file FILE              The file to ingest.
+  --dir DIR                The directory containing the files to ingest.
+  --init                   Init the memory and wipe its content (default: False)
+  --overlap OVERLAP        The overlap size between chunks when ingesting files (default: 200)
+  --max_length MAX_LENGTH  The max_length of each chunk when ingesting files (default: 4000)
+
+# python data_ingestion.py --dir DataFolder --init --overlap 100 --max_length 2000
+```
+In the example above, the script initializes the memory, ingests all files within the `Auto-Gpt/autogpt/auto_gpt_workspace/DataFolder` directory into memory with an overlap between chunks of 100 and a maximum length of each chunk of 2000.
+
+Note that you can also use the `--file` argument to ingest a single file into memory and that data_ingestion.py will only ingest files within the `/auto_gpt_workspace` directory.
+
+The DIR path is relative to the auto_gpt_workspace directory, so `python data_ingestion.py --dir . --init` will ingest everything in `auto_gpt_workspace` directory.
+
+You can adjust the `max_length` and overlap parameters to fine-tune the way the docuents are presented to the AI when it "recall" that memory:
+- Adjusting the overlap value allows the AI to access more contextual information from each chunk when recalling information, but will result in more chunks being created and therefore increase memory backend usage and OpenAI API requests.
+- Reducing the `max_length` value will create more chunks, which can save prompt tokens by allowing for more message history in the context, but will also increase the number of chunks.
+- Increasing the `max_length` value will provide the AI with more contextual information from each chunk, reducing the number of chunks created and saving on OpenAI API requests. However, this may also use more prompt tokens and decrease the overall context available to the AI.
+
+Memory pre-seeding is a technique for improving AI accuracy by ingesting relevant data into its memory. Chunks of data are split and added to memory, allowing the AI to access them quickly and generate more accurate responses. It's useful for large datasets or when specific information needs to be accessed quickly. Examples include ingesting API or GitHub documentation before running Auto-GPT.
+
+⚠️ If you use Redis as your memory, make sure to run Auto-GPT with the `WIPE_REDIS_ON_START=False` in your `.env` file.
+
+⚠️For other memory backend, we currently forcefully wipe the memory when starting Auto-GPT. To ingest data with those memory backend, you can call the `data_ingestion.py` script anytime during an Auto-GPT run. 
+
+Memories will be available to the AI immediately as they are ingested, even if ingested while Auto-GPT is running.
+
+## 💀 Continuous Mode ⚠️
+
+Run the AI **without** user authorization, 100% automated.
+Continuous mode is NOT recommended.
+It is potentially dangerous and may cause your AI to run forever or carry out actions you would not usually authorize.
+Use at your own risk.
+
+1. Run the `autogpt` python module in your terminal:
+
+    ```bash
+    python -m autogpt --speak --continuous
+    ```
+
+2. To exit the program, press Ctrl + C
+
+## GPT3.5 ONLY Mode
+
+If you don't have access to the GPT4 api, this mode will allow you to use Auto-GPT!
+
+```bash
+python -m autogpt --speak --gpt3only
 ```
 
-用法：data_ingestion.py [-h] (--file FILE | --dir DIR) [--init] [--overlap OVERLAP] [--max_length MAX_LENGTH]
+It is recommended to use a virtual machine for tasks that require high security measures to prevent any potential harm to the main computer's system and data.
 
-将一个文件或包含多个文件的目录摄取到内存中。确保在运行此脚本之前设置您的 .env。
+## 🖼 Image Generation
 
-选项：-h, --help 显示此帮助消息并退出 --file FILE 要摄取的文件。--dir DIR 包含要摄取的文件的目录。--init 初始化内存并擦除其内容（默认值：False） --overlap OVERLAP 摄取文件时块之间的重叠大小（默认值：200） --max_length MAX_LENGTH 摄取文件时每个块的最大长度（默认值：4000）
-```
+By default, Auto-GPT uses DALL-e for image generation. To use Stable Diffusion, a [Hugging Face API Token](https://huggingface.co/settings/tokens) is required.
 
-#### python autogpt/data_ingestion.py --dir seed_data --init --overlap 200 --max_length 1000
+Once you have a token, set these variables in your `.env`:
 
-- 该脚本位于 autogpt/data_ingestion.py，允许您将文件提取到内存中并在运行 Auto-GPT 之前预先填充。
-
-  记忆预填充是一种技术，涉及将相关文档或数据摄取到 AI 的记忆中，以便它可以使用这些信息来生成更明智和准确的响应。
-
-  为了预置到内存，每个文档的内容被分成指定最大长度的块，块之间有指定的重叠，然后每个块被添加到 .env 文件中的内存后端集。当提示 AI 回忆信息时，它可以访问那些预先植入的记忆以生成更明智和准确的响应。
-
-  当处理大量数据或存在 AI 需要能够快速访问的特定信息时，此技术特别有用。通过预先植入内存，人工智能可以更有效地检索和使用这些信息，从而节省时间、API 调用并提高其响应的准确性。
-
-  例如，您可以下载 API 文档、GitHub 存储库等，并在运行 Auto-GPT 之前将其提取到内存中。
-
-  ⚠️如果您使用 Redis 作为您的内存，请确保运行 Auto-GPT 并在您的文件中`WIPE_REDIS_ON_START`设置为。`False``.env`
-
-  ⚠️对于其他内存后端，我们目前在启动 Auto-GPT 时强制擦除内存。`data_ingestion.py`要使用这些内存后端摄取数据，您可以在 Auto-GPT 运行期间随时调用脚本。
-
-  即使在 Auto-GPT 运行时摄取记忆，AI 也会立即使用记忆。
-
-  在上面的示例中，脚本初始化内存，将目录中的所有文件摄取`/seed_data`到内存中，块之间的重叠为 200，每个块的最大长度为 4000。请注意，您也可以使用参数将`--file`单个文件摄取到内存中内存，并且脚本将只摄取`/auto_gpt_workspace`目录中的文件。
-
-  您可以调整`max_length`和重叠参数以微调文档在“回忆”该内存时呈现给 AI 的方式：
-
-  - 调整重叠值允许 AI 在调用信息时从每个块访问更多上下文信息，但会导致创建更多块，从而增加内存后端使用和 OpenAI API 请求。
-  - 减小该`max_length`值将创建更多块，这可以通过在上下文中允许更多消息历史记录来节省提示令牌，但也会增加块的数量。
-  - 增加该`max_length`值将为 AI 提供来自每个块的更多上下文信息，从而减少创建的块数量并节省 OpenAI API 请求。然而，这也可能会使用更多的提示标记并减少 AI 可用的整体上下文。
-
-## 连续模式⚠️
-
-**无需**用户授权即可 100% 自动化地运行 AI 。不推荐连续模式。它具有潜在危险，可能会导致您的 AI 永远运行或执行您通常不会授权的操作。使用风险自负。
-
-1. `main.py`在终端中运行Python 脚本：
-
-```
-python -m autogpt --continuous
-python -m autogpt --speak --continuous #带语音
-```
-
-2.要退出程序，请按 Ctrl + C
-
-## GPT3.5 ONLY 模式 
-
-如果您无权访问 GPT4 api，此模式将允许您使用 Auto-GPT！
-
-```
-python -m autogpt --gpt3only
-python -m autogpt --speak --gpt3only #带语音
-```
-
-建议将虚拟机用于需要高度安全措施的任务，以防止对主计算机的系统和数据造成任何潜在危害。
-
-## 🖼 图像生成
-
-默认情况下，Auto-GPT 使用 DALL-e 进行图像生成。要使用 Stable Diffusion，需要一个[HuggingFace API 令牌。](https://huggingface.co/settings/tokens)
-
-获得令牌后，将这些变量设置为`.env`：
-
-```
+```bash
 IMAGE_PROVIDER=sd
 HUGGINGFACE_API_TOKEN="YOUR_HUGGINGFACE_API_TOKEN"
 ```
 
-## ⚠️ 限制
+## Selenium
+```bash
+sudo Xvfb :10 -ac -screen 0 1024x768x24 & DISPLAY=:10 <YOUR_CLIENT>
+```
 
-该实验旨在展示 GPT-4 的潜力，但存在一些局限性：
+## ⚠️ Limitations
 
-1. 不是完善的应用程序或产品，只是一个实验
-2. 在复杂的真实业务场景中可能表现不佳。事实上，如果确实如此，请分享您的结果！
-3. 运行成本非常高，因此请使用 OpenAI 设置和监控您的 API 密钥限制！
+This experiment aims to showcase the potential of GPT-4 but comes with some limitations:
 
-## 🛡 免责声明
+1. Not a polished application or product, just an experiment
+2. May not perform well in complex, real-world business scenarios. In fact, if it actually does, please share your results!
+3. Quite expensive to run, so set and monitor your API key limits with OpenAI!
 
-免责声明 Auto-GPT 这个项目是一个实验性应用程序，按“原样”提供，没有任何明示或暗示的保证。使用本软件，即表示您同意承担与其使用相关的所有风险，包括但不限于数据丢失、系统故障或可能出现的任何其他问题。
+## 🛡 Disclaimer
 
-本项目的开发者和贡献者对因使用本软件而可能发生的任何损失、损害或其他后果不承担任何责任或义务。您对基于 Auto-GPT 提供的信息做出的任何决定和行动承担全部责任。
+Disclaimer
+This project, Auto-GPT, is an experimental application and is provided "as-is" without any warranty, express or implied. By using this software, you agree to assume all risks associated with its use, including but not limited to data loss, system failure, or any other issues that may arise.
 
-**请注意，由于使用代币，使用 GPT-4 语言模型可能会很昂贵。**通过使用此项目，您承认您有责任监控和管理您自己的代币使用情况和相关费用。强烈建议定期检查您的 OpenAI API 使用情况并设置任何必要的限制或警报以防止意外收费。
+The developers and contributors of this project do not accept any responsibility or liability for any losses, damages, or other consequences that may occur as a result of using this software. You are solely responsible for any decisions and actions taken based on the information provided by Auto-GPT.
 
-作为一项自主实验，Auto-GPT 可能会生成不符合现实世界商业惯例或法律要求的内容或采取的行动。您有责任确保基于此软件的输出做出的任何行动或决定符合所有适用的法律、法规和道德标准。本项目的开发者和贡献者对因使用本软件而产生的任何后果不承担任何责任。
+**Please note that the use of the GPT-4 language model can be expensive due to its token usage.** By utilizing this project, you acknowledge that you are responsible for monitoring and managing your own token usage and the associated costs. It is highly recommended to check your OpenAI API usage regularly and set up any necessary limits or alerts to prevent unexpected charges.
 
-通过使用 Auto-GPT，您同意就任何和所有索赔、损害、损失、责任、成本和费用（包括合理的律师费）对开发人员、贡献者和任何关联方进行赔偿、辩护并使其免受损害因您使用本软件或您违反这些条款而引起的。
+As an autonomous experiment, Auto-GPT may generate content or take actions that are not in line with real-world business practices or legal requirements. It is your responsibility to ensure that any actions or decisions made based on the output of this software comply with all applicable laws, regulations, and ethical standards. The developers and contributors of this project shall not be held responsible for any consequences arising from the use of this software.
+
+By using Auto-GPT, you agree to indemnify, defend, and hold harmless the developers, contributors, and any affiliated parties from and against any and all claims, damages, losses, liabilities, costs, and expenses (including reasonable attorneys' fees) arising from your use of this software or your violation of these terms.
+
+## 🐦 Connect with Us on Twitter
+
+Stay up-to-date with the latest news, updates, and insights about Auto-GPT by following our Twitter accounts. Engage with the developer and the AI's own account for interesting discussions, project updates, and more.
+
+- **Developer**: Follow [@siggravitas](https://twitter.com/siggravitas) for insights into the development process, project updates, and related topics from the creator of Entrepreneur-GPT.
+- **Entrepreneur-GPT**: Join the conversation with the AI itself by following [@En_GPT](https://twitter.com/En_GPT). Share your experiences, discuss the AI's outputs, and engage with the growing community of users.
+
+We look forward to connecting with you and hearing your thoughts, ideas, and experiences with Auto-GPT. Join us on Twitter and let's explore the future of AI together!
+
+<p align="center">
+  <a href="https://star-history.com/#Torantulino/auto-gpt&Date">
+    <img src="https://api.star-history.com/svg?repos=Torantulino/auto-gpt&type=Date" alt="Star History Chart">
+  </a>
+</p>
+
+## Run tests
+
+To run all tests, run the following command:
+
+```bash
+pytest 
+
+```
+
+To run just without integration tests:
+
+```
+pytest --without-integration
+```
+
+To run just without slow integration tests:
+
+```
+pytest --without-slow-integration
+```
+
+To run tests and see coverage, run the following command:
+
+```bash
+pytest --cov=autogpt --without-integration --without-slow-integration
+```
+
+## Run linter
+
+This project uses [flake8](https://flake8.pycqa.org/en/latest/) for linting. We currently use the following rules: `E303,W293,W291,W292,E305,E231,E302`. See the [flake8 rules](https://www.flake8rules.com/) for more information.
+
+To run the linter, run the following command:
+
+```bash
+flake8 autogpt/ tests/
+
+# Or, if you want to run flake8 with the same configuration as the CI:
+flake8 autogpt/ tests/ --select E303,W293,W291,W292,E305,E231,E302
+```

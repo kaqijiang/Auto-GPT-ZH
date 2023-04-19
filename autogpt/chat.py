@@ -28,11 +28,11 @@ def generate_context(prompt, relevant_memory, full_message_history, model):
     current_context = [
         create_chat_message("system", prompt),
         create_chat_message(
-            "system", f"现在的时间和日期是 {time.strftime('%c')}"
+            "system", f"The current time and date is {time.strftime('%c')}"
         ),
         create_chat_message(
             "system",
-            f"这让你想起了你过去的某些事件:\n{relevant_memory}\n\n",
+            f"This reminds you of these events from your past:\n{relevant_memory}\n\n",
         ),
     ]
 
@@ -76,7 +76,7 @@ def chat_with_ai(
             model = cfg.fast_llm_model  # TODO: Change model from hardcode to argument
             # Reserve 1000 tokens for the response
 
-            logger.debug(f"Token 限制: {token_limit}")
+            logger.debug(f"Token limit: {token_limit}")
             send_token_limit = token_limit - 1000
 
             relevant_memory = (
@@ -85,7 +85,7 @@ def chat_with_ai(
                 else permanent_memory.get_relevant(str(full_message_history[-9:]), 10)
             )
 
-            logger.debug(f"内存状态: {permanent_memory.get_stats()}")
+            logger.debug(f"Memory Stats: {permanent_memory.get_stats()}")
 
             (
                 next_message_to_add_index,
@@ -142,17 +142,17 @@ def chat_with_ai(
             #  https://www.github.com/Torantulino/Auto-GPT"
 
             # Debug print the current context
-            logger.debug(f"Token 限制: {token_limit}")
-            logger.debug(f"发送Token 数量: {current_tokens_used}")
-            logger.debug(f"Tokens 剩余回应: {tokens_remaining}")
-            logger.debug("------------ 发送给 AI 的上下文信息 ---------------")
+            logger.debug(f"Token limit: {token_limit}")
+            logger.debug(f"Send Token Count: {current_tokens_used}")
+            logger.debug(f"Tokens remaining for response: {tokens_remaining}")
+            logger.debug("------------ CONTEXT SENT TO AI ---------------")
             for message in current_context:
                 # Skip printing the prompt
                 if message["role"] == "system" and message["content"] == prompt:
                     continue
                 logger.debug(f"{message['role'].capitalize()}: {message['content']}")
                 logger.debug("")
-            logger.debug("----------- 结束上下文信息 ----------------")
+            logger.debug("----------- END OF CONTEXT ----------------")
 
             # TODO: use a model defined elsewhere, so that model can contain
             # temperature and other settings we care about
@@ -171,5 +171,5 @@ def chat_with_ai(
             return assistant_reply
         except RateLimitError:
             # TODO: When we switch to langchain, this is built in
-            print("Error: ", "已达到 API 速率限制。 等待 10 秒...")
+            print("Error: ", "API Rate Limit Reached. Waiting 10 seconds...")
             time.sleep(10)

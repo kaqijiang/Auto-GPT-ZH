@@ -1,42 +1,54 @@
 """Text processing functions"""
-from typing import Generator, Optional, Dict
+import textwrap
+from typing import Dict, Generator, Optional
+
 from selenium.webdriver.remote.webdriver import WebDriver
-from autogpt.memory import get_memory
+
 from autogpt.config import Config
 from autogpt.llm_utils import create_chat_completion
+from autogpt.memory import get_memory
 
 CFG = Config()
-MEMORY = get_memory(CFG)
+
+
+def get_memory_instance():
+    return get_memory(CFG)
 
 
 def split_text(text: str, max_length: int = 8192) -> Generator[str, None, None]:
-    """Split text into chunks of a maximum length
+    """Split text into chunks of a maximum length.
+
+    This function takes a text string and splits it into smaller chunks of a maximum length,
+    wrapping lines that exceed the maximum length. It uses the textwrap module to wrap lines
+    to the specified maximum length.
 
     Args:
-        text (str): The text to split
-        max_length (int, optional): The maximum length of each chunk. Defaults to 8192.
+        text (str): The text to split.
+        max_length (int, optional): The maximum length of each chunk. Defaults to 50.
 
     Yields:
-        str: The next chunk of text
+        str: The next chunk of text.
 
     Raises:
-        ValueError: If the text is longer than the maximum length
+        ValueError: If the max_length is less than or equal to 0.
     """
-    paragraphs = text.split("\n")
-    current_length = 0
-    current_chunk = []
+    if max_length <= 0:
+        raise ValueError("max_length should be greater than 0")
 
-    for paragraph in paragraphs:
-        if current_length + len(paragraph) + 1 <= max_length:
-            current_chunk.append(paragraph)
-            current_length += len(paragraph) + 1
+    if not text:
+        return
+
+    lines = text.split("\n")
+
+    for line in lines:
+        if not line.strip():
+            continue
+
+        wrapped_lines = textwrap.wrap(line, width=max_length)
+        if wrapped_lines:
+            yield from wrapped_lines
         else:
-            yield "\n".join(current_chunk)
-            current_chunk = [paragraph]
-            current_length = len(paragraph) + 1
-
-    if current_chunk:
-        yield "\n".join(current_chunk)
+            yield line
 
 
 def summarize_text(
@@ -55,6 +67,7 @@ def summarize_text(
     """
     if not text:
         return "Error: No text to summarize"
+    MEMORY = get_memory_instance()
 
     text_length = len(text)
     print(f"Text length: {text_length} characters")
@@ -78,7 +91,6 @@ def summarize_text(
         summary = create_chat_completion(
             model=CFG.fast_llm_model,
             messages=messages,
-            max_tokens=CFG.browse_summary_max_token,
         )
         summaries.append(summary)
         print(f"Added chunk {i + 1} summary to memory")
@@ -95,7 +107,6 @@ def summarize_text(
     return create_chat_completion(
         model=CFG.fast_llm_model,
         messages=messages,
-        max_tokens=CFG.browse_summary_max_token,
     )
 
 

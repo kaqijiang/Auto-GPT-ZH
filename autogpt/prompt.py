@@ -1,9 +1,10 @@
 from colorama import Fore
+
+from autogpt.config import Config
 from autogpt.config.ai_config import AIConfig
 from autogpt.config.config import Config
 from autogpt.logs import logger
 from autogpt.promptgenerator import PromptGenerator
-from autogpt.config import Config
 from autogpt.setup import prompt_user
 from autogpt.utils import clean_input
 
@@ -35,9 +36,11 @@ def get_prompt() -> str:
         " events, thinking about similar events will help you remember."
     )
     prompt_generator.add_constraint("No user assistance")
-    prompt_generator.add_constraint("Reply in Chinese")
     prompt_generator.add_constraint(
         'Exclusively use the commands listed in double quotes e.g. "command name"'
+    )
+    prompt_generator.add_constraint(
+        "Use subprocesses for commands that will not terminate within a few minutes"
     )
 
     # Define the command list
@@ -82,6 +85,7 @@ def get_prompt() -> str:
             {"code": "<full_code_string>", "focus": "<list_of_focus_areas>"},
         ),
         ("Execute Python File", "execute_python_file", {"file": "<file>"}),
+        ("Task Complete (Shutdown)", "task_complete", {"reason": "<reason>"}),
         ("Generate Image", "generate_image", {"prompt": "<prompt>"}),
         ("Send Tweet", "send_tweet", {"text": "<text>"}),
     ]
@@ -89,11 +93,7 @@ def get_prompt() -> str:
     # Only add the audio to text command if the model is specified
     if cfg.huggingface_audio_to_text_model:
         commands.append(
-            (
-                "Convert Audio to text",
-                "read_audio_from_file",
-                {"file": "<file>"}
-            ),
+            ("Convert Audio to text", "read_audio_from_file", {"file": "<file>"}),
         )
 
     # Only add shell command to the prompt if the AI is allowed to execute it
@@ -103,6 +103,23 @@ def get_prompt() -> str:
                 "Execute Shell Command, non-interactive commands only",
                 "execute_shell",
                 {"command_line": "<command_line>"},
+            ),
+        )
+        commands.append(
+            (
+                "Execute Shell Command Popen, non-interactive commands only",
+                "execute_shell_popen",
+                {"command_line": "<command_line>"},
+            ),
+        )
+
+    # Only add the download file command if the AI is allowed to execute it
+    if cfg.allow_downloads:
+        commands.append(
+            (
+                "Downloads a file from the internet, and stores it locally",
+                "download_file",
+                {"url": "<file_url>", "file": "<saved_filename>"},
             ),
         )
 
@@ -161,17 +178,18 @@ def construct_prompt() -> str:
         logger.typewriter_log("Goals:", Fore.GREEN, f"{config.ai_goals}")
     elif config.ai_name:
         logger.typewriter_log(
-            "欢迎回来! ",
+            "Welcome back! ",
             Fore.GREEN,
-            f"你想让继续执行原来的任务吗 {config.ai_name}?",
+            f"Would you like me to return to being {config.ai_name}?",
             speak_text=True,
         )
         should_continue = clean_input(
-            f"""继续上次的这些设置?
-名称:  {config.ai_name}
-职责:  {config.ai_role}
-目标: {config.ai_goals}
-继续 (输入y，继续上一次设置/输入n，重新来过): """)
+            f"""Continue with the last settings?
+Name:  {config.ai_name}
+Role:  {config.ai_role}
+Goals: {config.ai_goals}
+Continue (y/n): """
+        )
         if should_continue.lower() == "n":
             config = AIConfig()
 

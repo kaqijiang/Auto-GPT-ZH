@@ -1,8 +1,8 @@
 import argparse
 import logging
 
-from autogpt.config import Config
 from autogpt.commands.file_operations import ingest_file, search_files
+from autogpt.config import Config
 from autogpt.memory import get_memory
 
 cfg = Config()
@@ -21,17 +21,17 @@ def configure_logging():
 
 def ingest_directory(directory, memory, args):
     """
-     通过为每个文件调用 ingest_file 函数来摄取目录中的所有文件。
+    Ingest all files in a directory by calling the ingest_file function for each file.
 
-     :param directory: 包含要摄取的文件的目录
-     :param memory: 具有 add() 方法的对象，用于将块存储在内存中
-     """
+    :param directory: The directory containing the files to ingest
+    :param memory: An object with an add() method to store the chunks in memory
+    """
     try:
         files = search_files(directory)
         for file in files:
             ingest_file(file, memory, args.max_length, args.overlap)
     except Exception as e:
-        print(f"获取目录 '{directory}' 时出错：{str(e)}")
+        print(f"Error while ingesting directory '{directory}': {str(e)}")
 
 
 def main() -> None:
@@ -69,25 +69,26 @@ def main() -> None:
 
     # Initialize memory
     memory = get_memory(cfg, init=args.init)
-    print("使用内存类型：" + memory.__class__.__name__)
+    print("Using memory of type: " + memory.__class__.__name__)
 
     if args.file:
         try:
             ingest_file(args.file, memory, args.max_length, args.overlap)
-            print(f"文件 '{args.file}' 已成功获取。")
+            print(f"File '{args.file}' ingested successfully.")
         except Exception as e:
-            logger.error(f"获取文件 '{args.file}' 时出错：{str(e)}")
-            print(f"获取文件 '{args.file}' 时出错：{str(e)}")
+            logger.error(f"Error while ingesting file '{args.file}': {str(e)}")
+            print(f"Error while ingesting file '{args.file}': {str(e)}")
     elif args.dir:
         try:
             ingest_directory(args.dir, memory, args)
-            print(f"目录 '{args.dir}' 成功获取。")
+            print(f"Directory '{args.dir}' ingested successfully.")
         except Exception as e:
-            logger.error(f"获取目录 '{args.dir}' 时出错：{str(e)}")
-            print(f"获取目录 '{args.dir}' 时出错：{str(e)}")
+            logger.error(f"Error while ingesting directory '{args.dir}': {str(e)}")
+            print(f"Error while ingesting directory '{args.dir}': {str(e)}")
     else:
         print(
-           "请提供 auto_gpt_workspace 目录中的文件路径 (--file) 或目录名称 (--dir) 作为输入。"
+            "Please provide either a file path (--file) or a directory name (--dir)"
+            " inside the auto_gpt_workspace directory as input."
         )
 
 

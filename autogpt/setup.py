@@ -1,5 +1,6 @@
-"""Setup the AI and its goals"""
+"""Set up the AI and its goals"""
 from colorama import Fore, Style
+
 from autogpt import utils
 from autogpt.config.ai_config import AIConfig
 from autogpt.logs import logger
@@ -16,7 +17,7 @@ def prompt_user() -> AIConfig:
     logger.typewriter_log(
         "欢迎来到 Auto-GPT-ZH! 中文版由AJ提供. ",
         Fore.GREEN,
-        "",
+        "运行 '--help' 了解更多信息.",
         speak_text=True,
     )
     logger.typewriter_log(
@@ -61,7 +62,7 @@ def prompt_user() -> AIConfig:
         if ai_goal == "":
             break
         ai_goals.append(ai_goal)
-    if len(ai_goals) == 0:
+    if not ai_goals:
         ai_goals = [
             "Increase net worth",
             "Grow Twitter Account",

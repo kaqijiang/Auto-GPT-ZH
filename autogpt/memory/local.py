@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import dataclasses
 import os
-from typing import Any
+from typing import Any, List
 
 import numpy as np
 import orjson
 
-from autogpt.memory.base import MemoryProviderSingleton
 from autogpt.llm_utils import create_embedding_with_ada
+from autogpt.memory.base import MemoryProviderSingleton
 
 EMBED_DIM = 1536
 SAVE_OPTIONS = orjson.OPT_SERIALIZE_NUMPY | orjson.OPT_SERIALIZE_DATACLASS
@@ -54,7 +54,7 @@ class LocalCache(MemoryProviderSingleton):
                 self.data = CacheContent()
         else:
             print(
-                f"Warning: 文件 '{self.filename}' 不存在. 本地内存不会保存到文件中。."
+                f"Warning: 文件 '{self.filename}' 不存在. 本地内存不会保存到文件中."
             )
             self.data = CacheContent()
 

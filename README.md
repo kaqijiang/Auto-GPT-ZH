@@ -386,7 +386,7 @@ python -m autogpt --speak --gpt3only #带语音
 
 ## 🖼 图像生成
 
-默认情况下，Auto-GPT 使用 DALL-e 进行图像生成。要使用 Stable Diffusion，需要一个[HuggingFace API 令牌。](https://huggingface.co/settings/tokens)
+默认情况下，Auto-GPT 使用 DALL-e 进行图像生成。要使用 Stable Diffusion，需要一个[Hugging Face API 令牌。](https://huggingface.co/settings/tokens)
 
 获得令牌后，将这些变量设置为`.env`：
 

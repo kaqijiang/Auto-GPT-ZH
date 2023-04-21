@@ -2,6 +2,7 @@
 import json
 from typing import Dict, List, NoReturn, Union
 
+from qdata.baidu_search import get_all_search
 from autogpt.agent.agent_manager import AgentManager
 from autogpt.commands.analyze_code import analyze_code
 from autogpt.commands.audio_text import read_audio_from_file
@@ -124,6 +125,13 @@ def execute_command(command_name: str, arguments):
             # Check if the Google API key is set and use the official search method
             # If the API key is not set or has only whitespaces, use the unofficial
             # search method
+            google_result=[]
+            baidu_result=get_all_search(keyword=arguments["query"], cookies="", domain=None)
+            for result in baidu_result:
+                print(result);
+                google_result.append(result["url"])
+            """google_result=[item["url"] for item in baidu_result]"""
+            return google_result;
             key = CFG.google_api_key
             if key and key.strip() and key != "your-google-api-key":
                 google_result = google_official_search(arguments["query"])

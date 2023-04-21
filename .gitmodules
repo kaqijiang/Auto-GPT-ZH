@@ -1,0 +1,3 @@
+[submodule "spider-BaiduIndex"]
+	path = spider-BaiduIndex
+	url = https://github.com/longxiaofei/spider-BaiduIndex.git

@@ -1,5 +1,6 @@
 """Main script for the autogpt package."""
 import click
+from autogpt.localization import translate_memory_type
 
 
 @click.group(invoke_without_command=True)
@@ -132,7 +133,7 @@ def main(
         # this is particularly important for indexing and referencing pinecone memory
         memory = get_memory(cfg, init=True)
         logger.typewriter_log(
-            "使用存储类型:", Fore.GREEN, f"{memory.__class__.__name__}"
+            "使用记忆类型:", Fore.GREEN, f"{translate_memory_type(memory.__class__.__name__)}"
         )
         logger.typewriter_log("使用浏览器:", Fore.GREEN, cfg.selenium_web_browser)
         agent = Agent(

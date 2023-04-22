@@ -9,6 +9,7 @@ from autogpt.logs import logger, print_assistant_thoughts
 from autogpt.speech import say_text
 from autogpt.spinner import Spinner
 from autogpt.utils import clean_input
+from autogpt.localization import translate_command, translate_command_args
 
 
 class Agent:
@@ -71,7 +72,7 @@ class Agent:
                 break
 
             # Send message to AI, get response
-            with Spinner("Thinking... "):
+            with Spinner("正在思考... "):
                 assistant_reply = chat_with_ai(
                     self.system_prompt,
                     self.triggering_prompt,
@@ -91,7 +92,7 @@ class Agent:
                     command_name, arguments = get_command(assistant_reply_json)
                     # command_name, arguments = assistant_reply_json_valid["command"]["name"], assistant_reply_json_valid["command"]["args"]
                     if cfg.speak_mode:
-                        say_text(f"我要执行 {command_name}")
+                        say_text(f"我要执行 {translate_command(command_name)}")
                 except Exception as e:
                     logger.error("Error: \n", str(e))
 
@@ -102,15 +103,15 @@ class Agent:
                 logger.typewriter_log(
                     "下一步操作: ",
                     Fore.CYAN,
-                    f"COMMAND = {Fore.CYAN}{command_name}{Style.RESET_ALL}  "
-                    f"ARGUMENTS = {Fore.CYAN}{arguments}{Style.RESET_ALL}",
+                    f"指令 = {Fore.CYAN}{translate_command(command_name)}{Style.RESET_ALL}  "
+                    f"参数 = {Fore.CYAN}{translate_command_args(arguments)}{Style.RESET_ALL}",
                 )
                 print(
                     f"输入'y'授权命令，'y -N'运行N个连续命令，'n'退出程序，或为{self.ai_name}输入反馈...",
                     flush=True)
                 while True:
                     console_input = clean_input(
-                        Fore.MAGENTA + "Input:" + Style.RESET_ALL
+                        Fore.MAGENTA + "输入:" + Style.RESET_ALL
                     )
                     if console_input.lower().strip() == "y":
                         user_input = "GENERATE NEXT COMMAND JSON"
@@ -150,8 +151,8 @@ class Agent:
                 logger.typewriter_log(
                     "下一步操作: ",
                     Fore.CYAN,
-                    f"COMMAND = {Fore.CYAN}{command_name}{Style.RESET_ALL}"
-                    f"  ARGUMENTS = {Fore.CYAN}{arguments}{Style.RESET_ALL}",
+                    f"指令 = {Fore.CYAN}{translate_command(command_name)}{Style.RESET_ALL}"
+                    f"  参数 = {Fore.CYAN}{translate_command_args(arguments)}{Style.RESET_ALL}",
                 )
 
             # Execute command
@@ -159,11 +160,19 @@ class Agent:
                 result = (
                     f"Command {command_name} 抛出以下错误: {arguments}"
                 )
+                result_localized = (
+                    f"指令 {translate_command(command_name)} 抛出以下错误: {translate_command_args(arguments)}"
+                )
             elif command_name == "human_feedback":
                 result = f"人工反馈: {user_input}"
+                result_localized = result
             else:
                 result = (
                     f"Command {command_name} returned: "
+                    f"{execute_command(command_name, arguments)}"
+                )
+                result_localized = (
+                    f"指令 {translate_command(command_name)} 返回了: "
                     f"{execute_command(command_name, arguments)}"
                 )
                 if self.next_action_count > 0:
@@ -181,7 +190,7 @@ class Agent:
             # history
             if result is not None:
                 self.full_message_history.append(create_chat_message("system", result))
-                logger.typewriter_log("SYSTEM: ", Fore.YELLOW, result)
+                logger.typewriter_log("系统: ", Fore.YELLOW, result_localized)
             else:
                 self.full_message_history.append(
                     create_chat_message("system", "无法执行命令")

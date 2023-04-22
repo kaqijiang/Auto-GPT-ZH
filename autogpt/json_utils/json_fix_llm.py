@@ -14,6 +14,7 @@ from autogpt.json_utils.json_fix_general import correct_json
 from autogpt.llm_utils import call_ai_function
 from autogpt.logs import logger
 from autogpt.speech import say_text
+from autogpt.localization import fix_json_by_removing_preface, fix_json_by_removing_newline_in_values
 
 JSON_SCHEMA = """
 {
@@ -125,6 +126,8 @@ def fix_and_parse_json(
     Returns:
         str or dict[Any, Any]: The parsed JSON.
     """
+    json_to_load = fix_json_by_removing_preface(json_to_load)
+    json_to_load = fix_json_by_removing_newline_in_values(json_to_load)
 
     with contextlib.suppress(json.JSONDecodeError):
         json_to_load = json_to_load.replace("\t", "")
@@ -202,7 +205,7 @@ def attempt_to_fix_json_by_finding_outermost_brackets(json_string: str):
             # Extract the valid JSON object from the string
             json_string = json_match.group(0)
             logger.typewriter_log(
-                title="Apparently json was fixed.", title_color=Fore.GREEN
+                title="似乎修复了 JSON.", title_color=Fore.GREEN
             )
             if CFG.speak_mode and CFG.debug_mode:
                 say_text("Apparently json was fixed.")

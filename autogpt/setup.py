@@ -42,7 +42,7 @@ def prompt_user() -> AIConfig:
 
     # Get AI Role from User
     logger.typewriter_log(
-        "描述您的 AI 的职责：",
+        "描述您的 AI 的角色：",
         Fore.GREEN,
         "例如，'一种旨在自主开发和经营业务的人工智能，其唯一目标是增加你的净资产。"
     )
@@ -58,7 +58,7 @@ def prompt_user() -> AIConfig:
     print("输入空白以加载默认值，完成时不要输入任何内容。", flush=True)
     ai_goals = []
     for i in range(5):
-        ai_goal = utils.clean_input(f"{Fore.LIGHTBLUE_EX}Goal{Style.RESET_ALL} {i+1}: ")
+        ai_goal = utils.clean_input(f"{Fore.LIGHTBLUE_EX}目标{Style.RESET_ALL} {i+1}: ")
         if ai_goal == "":
             break
         ai_goals.append(ai_goal)

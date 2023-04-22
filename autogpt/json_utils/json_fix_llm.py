@@ -103,7 +103,7 @@ def fix_json_using_multiple_techniques(assistant_reply: str) -> Dict[Any, Any]:
         return assistant_reply_json
 
     logger.error(
-        "Error: The following AI output couldn't be converted to a JSON:\n",
+        "Error: 以下 AI 输出无法转换为 JSON:\n",
         assistant_reply,
     )
     if CFG.speak_mode:

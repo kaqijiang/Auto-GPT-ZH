@@ -56,10 +56,10 @@ class RedisMemory(MemoryProviderSingleton):
                 Style.BRIGHT + str(e) + Style.RESET_ALL,
             )
             logger.double_check(
-                "Please ensure you have setup and configured Redis properly for use. "
-                + f"You can check out {Fore.CYAN + Style.BRIGHT}"
+                "请确保您已经正确地设置和配置了Redis。"
+                + f"您可以查看{Fore.CYAN + Style.BRIGHT}"
                 f"https://github.com/Torantulino/Auto-GPT#redis-setup{Style.RESET_ALL}"
-                " to ensure you've set up everything correctly."
+                "以确保您已经正确地设置了一切。"
             )
             exit(1)
 

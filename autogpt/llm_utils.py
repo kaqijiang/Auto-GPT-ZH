@@ -105,9 +105,9 @@ def create_chat_completion(
                 )
             if not warned_user:
                 logger.double_check(
-                    f"Please double check that you have setup a {Fore.CYAN + Style.BRIGHT}PAID{Style.RESET_ALL} OpenAI API Account. "
-                    + f"You can read more here: {Fore.CYAN}https://github.com/Significant-Gravitas/Auto-GPT#openai-api-keys-configuration{Fore.RESET}"
-                )
+                    f"请确认您已经设置了一个{Fore.CYAN + Style.BRIGHT}已付费{Style.RESET_ALL}的OpenAI API账户。"
+                    + f"您可以在此处阅读更多信息：{Fore.CYAN}https://github.com/Significant-Gravitas/Auto-GPT#openai-api-keys-configuration{Fore.RESET}"
+                    )
                 warned_user = True
         except APIError as e:
             if e.http_status == 502:

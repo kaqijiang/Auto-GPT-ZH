@@ -42,7 +42,7 @@ def safe_path_join(base: Path, *paths: str | Path) -> Path:
 
     if CFG.restrict_to_workspace and not joined_path.is_relative_to(base):
         raise ValueError(
-            f"Attempted to access path '{joined_path}' outside of workspace '{base}'."
+            f"尝试访问工作区 '{base}' 之外的路径 '{joined_path}'。"
         )
 
     return joined_path

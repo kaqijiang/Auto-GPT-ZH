@@ -144,7 +144,7 @@ def write_to_file(filename: str, text: str) -> str:
         str: A message indicating success or failure
     """
     if check_duplicate_operation("write", filename):
-        return "Error: File has already been updated."
+        return "Error: 文件已经被更新."
     try:
         filepath = path_in_workspace(filename)
         directory = os.path.dirname(filepath)
@@ -153,7 +153,7 @@ def write_to_file(filename: str, text: str) -> str:
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(text)
         log_operation("write", filename)
-        return "File written to successfully."
+        return "文件已成功写入."
     except Exception as e:
         return f"Error: {str(e)}"
 
@@ -176,7 +176,7 @@ def append_to_file(filename: str, text: str, shouldLog: bool = True) -> str:
         if shouldLog:
             log_operation("append", filename)
 
-        return "Text appended successfully."
+        return "文本已成功追加."
     except Exception as e:
         return f"Error: {str(e)}"
 
@@ -191,12 +191,12 @@ def delete_file(filename: str) -> str:
         str: A message indicating success or failure
     """
     if check_duplicate_operation("delete", filename):
-        return "Error: File has already been deleted."
+        return "Error: 文件已被删除."
     try:
         filepath = path_in_workspace(filename)
         os.remove(filepath)
         log_operation("delete", filename)
-        return "File deleted successfully."
+        return "文件已成功删除."
     except Exception as e:
         return f"Error: {str(e)}"
 
@@ -235,7 +235,7 @@ def download_file(url, filename):
     """
     safe_filename = path_in_workspace(filename)
     try:
-        message = f"{Fore.YELLOW}Downloading file from {Back.LIGHTBLUE_EX}{url}{Back.RESET}{Fore.RESET}"
+        message = f"{Fore.YELLOW}下载文件: {Back.LIGHTBLUE_EX}{url}{Back.RESET}{Fore.RESET}"
         with Spinner(message) as spinner:
             session = requests.Session()
             retry = Retry(total=3, backoff_factor=1, status_forcelist=[502, 503, 504])
@@ -260,8 +260,8 @@ def download_file(url, filename):
                         progress = f"{readable_file_size(downloaded_size)} / {readable_file_size(total_size)}"
                         spinner.update_message(f"{message} {progress}")
 
-            return f'Successfully downloaded and locally stored file: "{filename}"! (Size: {readable_file_size(total_size)})'
+            return f'已成功下载并本地存储文件："{filename}"！ (文件大小：{readable_file_size(total_size)})'
     except requests.HTTPError as e:
-        return f"Got an HTTP Error whilst trying to download file: {e}"
+        return f"尝试下载文件时发生HTTP错误: {e}"
     except Exception as e:
         return "Error: " + str(e)

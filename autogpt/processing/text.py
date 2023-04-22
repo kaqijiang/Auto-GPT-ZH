@@ -105,7 +105,7 @@ def summarize_text(
     for i, chunk in enumerate(chunks):
         if driver:
             scroll_to_percentage(driver, scroll_ratio * i)
-        print(f"Adding chunk {i + 1} / {len(chunks)} to memory")
+        print(f"正在将第 {i + 1} / {len(chunks)} 段文本添加到内存中")
 
         memory_to_add = f"Source: {url}\n" f"Raw content part#{i + 1}: {chunk}"
 
@@ -114,7 +114,7 @@ def summarize_text(
         messages = [create_message(chunk, question)]
         tokens_for_chunk = token_counter.count_message_tokens(messages, model)
         print(
-            f"Summarizing chunk {i + 1} / {len(chunks)} of length {len(chunk)} characters, or {tokens_for_chunk} tokens"
+        f"正在对第 {i + 1} / {len(chunks)} 段文本进行总结，长度为 {len(chunk)} 个字符，或 {tokens_for_chunk} 个标记"
         )
 
         summary = create_chat_completion(
@@ -123,14 +123,14 @@ def summarize_text(
         )
         summaries.append(summary)
         print(
-            f"Added chunk {i + 1} summary to memory, of length {len(summary)} characters"
+        f"已将第 {i + 1} 段文本的总结添加到内存中，长度为 {len(summary)} 个字符"
         )
 
         memory_to_add = f"Source: {url}\n" f"Content summary part#{i + 1}: {summary}"
 
         MEMORY.add(memory_to_add)
 
-    print(f"Summarized {len(chunks)} chunks.")
+    print(f"已总结 {len(chunks)} 段文本。")
 
     combined_summary = "\n".join(summaries)
     messages = [create_message(combined_summary, question)]
@@ -168,7 +168,5 @@ def create_message(chunk: str, question: str) -> Dict[str, str]:
     """
     return {
         "role": "user",
-        "content": f'"""{chunk}""" Using the above text, answer the following'
-        f' question: "{question}" -- if the question cannot be answered using the text,'
-        " summarize the text.",
+        "content": f'"""{chunk}""" 请使用上述文本回答以下问题："{question}" -- 如果问题无法使用文本回答，请总结文本。',
     }

@@ -10,8 +10,8 @@ def clean_input(prompt: str = ""):
     try:
         return input(prompt)
     except KeyboardInterrupt:
-        print("You interrupted Auto-GPT")
-        print("Quitting...")
+        print("您中断了AutoGPT")
+        print("退出中...")
         exit(0)
 
 
@@ -20,14 +20,14 @@ def validate_yaml_file(file: str):
         with open(file, encoding="utf-8") as fp:
             yaml.load(fp.read(), Loader=yaml.FullLoader)
     except FileNotFoundError:
-        return (False, f"The file {Fore.CYAN}`{file}`{Fore.RESET} wasn't found")
+        return (False, f"文件 {Fore.CYAN}`{file}`{Fore.RESET} 没有找到")
     except yaml.YAMLError as e:
         return (
             False,
-            f"There was an issue while trying to read with your AI Settings file: {e}",
+            f"在尝试读取您的AI设置文件时出现问题：{e}"
         )
 
-    return (True, f"Successfully validated {Fore.CYAN}`{file}`{Fore.RESET}!")
+    return (True, f"成功验证了 {Fore.CYAN}{file}{Fore.RESET}!")
 
 
 def readable_file_size(size, decimal_places=2):
@@ -46,7 +46,7 @@ def readable_file_size(size, decimal_places=2):
 def get_bulletin_from_web() -> str:
     try:
         response = requests.get(
-            "https://raw.githubusercontent.com/Significant-Gravitas/Auto-GPT/master/BULLETIN.md"
+            "https://nhrvt0kw31.feishu.cn/docx/FDEUd0YhKolp52xFPrMc34e9nse"
         )
         if response.status_code == 200:
             return response.text

@@ -116,7 +116,7 @@ class Agent:
                         user_input = "GENERATE NEXT COMMAND JSON"
                         break
                     elif console_input.lower().strip() == "":
-                        print("Invalid input format.")
+                        print("输入格式无效。")
                         continue
                     elif console_input.lower().startswith("y -"):
                         try:
@@ -160,7 +160,7 @@ class Agent:
                     f"Command {command_name} 抛出以下错误: {arguments}"
                 )
             elif command_name == "human_feedback":
-                result = f"Human feedback: {user_input}"
+                result = f"人工反馈: {user_input}"
             else:
                 result = (
                     f"Command {command_name} returned: "

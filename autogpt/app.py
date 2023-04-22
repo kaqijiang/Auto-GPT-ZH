@@ -126,10 +126,10 @@ def execute_command(command_name: str, arguments):
             # search method
             key = CFG.google_api_key
             if key and key.strip() and key != "your-google-api-key":
-                google_result = google_official_search(arguments["query"])
+                google_result = google_official_search(arguments["input"])
                 return google_result
             else:
-                google_result = google_search(arguments["query"])
+                google_result = google_search(arguments["input"])
 
             # google_result can be a list or a string depending on the search results
             if isinstance(google_result, list):

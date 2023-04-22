@@ -103,16 +103,16 @@ def main(
         logger.set_level(logging.DEBUG if cfg.debug_mode else logging.INFO)
         ai_name = ""
         if not cfg.skip_news:
-            motd = get_latest_bulletin()
-            if motd:
-                logger.typewriter_log("NEWS: ", Fore.GREEN, motd)
+            # motd = get_latest_bulletin()
+            # if motd:
+            #     logger.typewriter_log("NEWS: ", Fore.GREEN, motd)
             git_branch = get_current_git_branch()
-            if git_branch and git_branch != "stable":
-                logger.typewriter_log(
-                    "警告：",
-                    Fore.RED,
-                    f"您正在运行 {git_branch} 分支 - 这不是受支持的分支。",
-                )
+            # if git_branch and git_branch != "stable":
+            #     logger.typewriter_log(
+            #         "警告：",
+            #         Fore.RED,
+            #         f"您正在运行 {git_branch} 分支 - 这不是受支持的分支。",
+            #     )
             if sys.version_info < (3, 10):
                 logger.typewriter_log(
                     "警告：",
@@ -134,7 +134,7 @@ def main(
         logger.typewriter_log(
             "使用存储类型:", Fore.GREEN, f"{memory.__class__.__name__}"
         )
-        logger.typewriter_log("使用浏览器r:", Fore.GREEN, cfg.selenium_web_browser)
+        logger.typewriter_log("使用浏览器:", Fore.GREEN, cfg.selenium_web_browser)
         agent = Agent(
             ai_name=ai_name,
             memory=memory,

@@ -80,6 +80,15 @@ class Agent:
 
             assistant_reply_json = fix_json_using_multiple_techniques(assistant_reply)
 
+            if not isinstance(assistant_reply_json, dict):
+                logger.error(
+                    "=" * 20 + "\n" +
+                    f"修复JSON失败:\n"
+                    f"原始回复: {assistant_reply}\n"
+                    f"修复后的回复: {assistant_reply_json}"
+                    + "\n" + "=" * 20
+                )
+
             # 解析和验证AI的回复
             if assistant_reply_json != {}:
                 validate_json(assistant_reply_json, "llm_response_format_1")

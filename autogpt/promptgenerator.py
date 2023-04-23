@@ -123,13 +123,14 @@ class PromptGenerator:
         """
         formatted_response_format = json.dumps(self.response_format, indent=4)
         return (
-            f"Constraints:\n{self._generate_numbered_list(self.constraints)}\n\n"
-            "Commands:\n"
+            f"约束:\n{self._generate_numbered_list(self.constraints)}\n\n"
+            "指令:\n"
             f"{self._generate_numbered_list(self.commands, item_type='command')}\n\n"
-            f"Resources:\n{self._generate_numbered_list(self.resources)}\n\n"
-            "Performance Evaluation:\n"
+            f"资源:\n{self._generate_numbered_list(self.resources)}\n\n"
+            "绩效评估:\n"
             f"{self._generate_numbered_list(self.performance_evaluation)}\n\n"
-            "You should only respond in JSON format as described below \nResponse"
-            f" Format: \n{formatted_response_format} \nEnsure the response can be"
-            " parsed by Python json.loads"
+            "你应该只以JSON格式响应，如下所述 \n"
+            "响应格式: \n"
+            f"{formatted_response_format} \n"
+            "确保响应可以被Python json.loads解析"
         )

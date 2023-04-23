@@ -101,6 +101,7 @@ def main(
             allow_downloads,
             skip_news,
         )
+        # 配置日志记录和设置，如设置日志级别、创建配置文件等
         logger.set_level(logging.DEBUG if cfg.debug_mode else logging.INFO)
         ai_name = ""
         if not cfg.skip_news:
@@ -122,20 +123,20 @@ def main(
                 )
         system_prompt = construct_prompt()
         # print(prompt)
-        # Initialize variables
+        # 初始化一些变量，例如消息历史记录、下一个动作计数等
         full_message_history = []
         next_action_count = 0
         # Make a constant:
         triggering_prompt = (
             "确定要使用哪个下一个命令，并使用上面指定的格式进行响应："
         )
-        # Initialize memory and make sure it is empty.
-        # this is particularly important for indexing and referencing pinecone memory
+        # 初始化内存，并确保它是空的。这对于索引和引用内存（如Pinecone内存）尤为重要
         memory = get_memory(cfg, init=True)
         logger.typewriter_log(
             "使用记忆类型:", Fore.GREEN, f"{translate_memory_type(memory.__class__.__name__)}"
         )
         logger.typewriter_log("使用浏览器:", Fore.GREEN, cfg.selenium_web_browser)
+        # 根据配置创建一个Agent实例，用于处理与用户的交互
         agent = Agent(
             ai_name=ai_name,
             memory=memory,
@@ -144,6 +145,7 @@ def main(
             system_prompt=system_prompt,
             triggering_prompt=triggering_prompt,
         )
+        # 启动交互循环，使用户可以与AutoGPT应用程序进行交互
         agent.start_interaction_loop()
 
 

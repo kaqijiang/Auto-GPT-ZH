@@ -7,7 +7,7 @@ from autogpt.logs import logger
 
 
 def prompt_user() -> AIConfig:
-    """Prompt the user for input
+    """提示用户输入内容
 
     Returns:
         AIConfig: The AIConfig object containing the user's input
@@ -64,9 +64,9 @@ def prompt_user() -> AIConfig:
         ai_goals.append(ai_goal)
     if not ai_goals:
         ai_goals = [
-            "Increase net worth",
-            "Grow Twitter Account",
-            "Develop and manage multiple businesses autonomously",
+            "增加网络价值",
+            "增加 Twitter 账户的关注者",
+            "自主开发和管理多个业务",
         ]
 
     return AIConfig(ai_name, ai_role, ai_goals)

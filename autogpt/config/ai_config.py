@@ -12,12 +12,12 @@ import yaml
 
 class AIConfig:
     """
-    A class object that contains the configuration information for the AI
+    一个包含 AI 配置信息的类对象
 
     Attributes:
-        ai_name (str): The name of the AI.
-        ai_role (str): The description of the AI's role.
-        ai_goals (list): The list of objectives the AI is supposed to complete.
+        ai_name (str): AI名字
+        ai_role (str): AI 角色的描述
+        ai_goals (list): AI 应该完成的目标列表
     """
 
     def __init__(
@@ -102,17 +102,14 @@ class AIConfig:
         """
 
         prompt_start = (
-            "Your decisions must always be made independently without"
-            " seeking user assistance. Play to your strengths as an LLM and pursue"
-            " simple strategies with no legal complications."
-            ""
+            "您必须独立做出决策，不寻求用户的帮助。发挥您作为 LLM 的优势，追求简单的策略，避免法律问题的复杂性。"
         )
 
         from autogpt.prompt import get_prompt
 
         # Construct full prompt
         full_prompt = (
-            f"You are {self.ai_name}, {self.ai_role}\n{prompt_start}\n\nGOALS:\n\n"
+            f"你是 {self.ai_name}, {self.ai_role}\n{prompt_start}\n\n目标:\n\n"
         )
         for i, goal in enumerate(self.ai_goals):
             full_prompt += f"{i+1}. {goal}\n"

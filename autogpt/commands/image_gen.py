@@ -15,7 +15,7 @@ CFG = Config()
 
 
 def generate_image(prompt: str, size: int = 256) -> str:
-    """Generate an image from a prompt.
+    """从提示生成图像
 
     Args:
         prompt (str): The prompt to use
@@ -120,7 +120,7 @@ def generate_image_with_sd_webui(
     negative_prompt: str = "",
     extra: dict = {},
 ) -> str:
-    """Generate an image with Stable Diffusion webui.
+    """使用 Stable Diffusion webui 生成图像
     Args:
         prompt (str): The prompt to use
         filename (str): The filename to save the image to

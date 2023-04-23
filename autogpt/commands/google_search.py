@@ -11,7 +11,7 @@ CFG = Config()
 
 
 def google_search(query: str, num_results: int = 8) -> str:
-    """Return the results of a Google search
+    """返回 Google 搜索的结果
 
     Args:
         query (str): The search query.
@@ -35,7 +35,7 @@ def google_search(query: str, num_results: int = 8) -> str:
 
 
 def google_official_search(query: str, num_results: int = 8) -> str | list[str]:
-    """Return the results of a Google search using the official Google API
+    """使用官方 Google API 返回 Google 搜索的结果
 
     Args:
         query (str): The search query.

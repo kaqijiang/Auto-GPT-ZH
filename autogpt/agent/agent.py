@@ -16,15 +16,12 @@ class Agent:
     """Agent class for interacting with Auto-GPT.
 
     Attributes:
-        ai_name: The name of the agent.
-        memory: The memory object to use.
-        full_message_history: The full message history.
-        next_action_count: The number of actions to execute.
-        system_prompt: The system prompt is the initial prompt that defines everything the AI needs to know to achieve its task successfully.
-        Currently, the dynamic and customizable information in the system prompt are ai_name, description and goals.
-
-        triggering_prompt: The last sentence the AI will see before answering. For Auto-GPT, this prompt is:
-            Determine which next command to use, and respond using the format specified above:
+        ai_name: 代理的名称
+        memory: 要使用的内存对象
+        full_message_history: 完整的消息历史记录
+        next_action_count: 要执行的操作数
+        system_prompt: 系统提示是初始提示，定义了AI需要了解的所有内容以成功完成任务。系统提示中的动态和可自定义信息包括ai_name、描述和目标
+        triggering_prompt: AI在回答之前看到的最后一句话。对于Auto-GPT，这个提示是确定要使用哪个下一个命令，并使用上面指定的格式进行响应:
             The triggering prompt is not part of the system prompt because between the system prompt and the triggering
             prompt we have contextual information that can distract the AI and make it forget that its goal is to find the next task to achieve.
             SYSTEM PROMPT
@@ -59,7 +56,7 @@ class Agent:
         user_input = ""
 
         while True:
-            # Discontinue if continuous limit is reached
+            # 检查是否达到了连续模式的限制
             loop_count += 1
             if (
                 cfg.continuous_mode
@@ -71,7 +68,7 @@ class Agent:
                 )
                 break
 
-            # Send message to AI, get response
+            # 将消息发送给AI并获得响应
             with Spinner("正在思考... "):
                 assistant_reply = chat_with_ai(
                     self.system_prompt,
@@ -83,10 +80,10 @@ class Agent:
 
             assistant_reply_json = fix_json_using_multiple_techniques(assistant_reply)
 
-            # Print Assistant thoughts
+            # 解析和验证AI的回复
             if assistant_reply_json != {}:
                 validate_json(assistant_reply_json, "llm_response_format_1")
-                # Get command name and arguments
+                # 从AI的回复中获取命令名称和参数
                 try:
                     print_assistant_thoughts(self.ai_name, assistant_reply_json)
                     command_name, arguments = get_command(assistant_reply_json)
@@ -97,7 +94,7 @@ class Agent:
                     logger.error("Error: \n", str(e))
 
             if not cfg.continuous_mode and self.next_action_count == 0:
-                ### GET USER AUTHORIZATION TO EXECUTE COMMAND ###
+                ### 根据配置，获取用户对执行命令的授权或直接执行命令 ###
                 # Get key press: Prompt the user to press enter to continue or escape
                 # to exit
                 logger.typewriter_log(
@@ -186,7 +183,7 @@ class Agent:
 
             self.memory.add(memory_to_add)
 
-            # Check if there's a result from the command append it to the message
+            # 执行命令并将结果添加到内存和消息历史记录中
             # history
             if result is not None:
                 self.full_message_history.append(create_chat_message("system", result))

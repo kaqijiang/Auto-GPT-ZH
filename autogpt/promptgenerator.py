@@ -7,14 +7,12 @@ from typing import Any
 
 class PromptGenerator:
     """
-    A class for generating custom prompt strings based on constraints, commands,
-        resources, and performance evaluations.
+    用于根据约束、命令、资源和性能评估生成自定义提示字符串的类
     """
 
     def __init__(self) -> None:
         """
-        Initialize the PromptGenerator object with empty lists of constraints,
-            commands, resources, and performance evaluations.
+        初始化 PromptGenerator 对象，并创建空列表来存储约束、命令、资源和性能评估。同时初始化一个响应格式字典（response_format）
         """
         self.constraints = []
         self.commands = []
@@ -33,7 +31,7 @@ class PromptGenerator:
 
     def add_constraint(self, constraint: str) -> None:
         """
-        Add a constraint to the constraints list.
+        向约束列表中添加约束
 
         Args:
             constraint (str): The constraint to be added.
@@ -42,7 +40,7 @@ class PromptGenerator:
 
     def add_command(self, command_label: str, command_name: str, args=None) -> None:
         """
-        Add a command to the commands list with a label, name, and optional arguments.
+        向命令列表中添加命令，命令由命令标签（command_label）、命令名称（command_name）和可选的命令参数（args）组成
 
         Args:
             command_label (str): The label of the command.
@@ -65,7 +63,7 @@ class PromptGenerator:
 
     def _generate_command_string(self, command: dict[str, Any]) -> str:
         """
-        Generate a formatted string representation of a command.
+        根据传入的命令字典生成格式化的命令字符串
 
         Args:
             command (dict): A dictionary containing command information.
@@ -80,7 +78,7 @@ class PromptGenerator:
 
     def add_resource(self, resource: str) -> None:
         """
-        Add a resource to the resources list.
+        向资源列表中添加资源
 
         Args:
             resource (str): The resource to be added.
@@ -89,7 +87,7 @@ class PromptGenerator:
 
     def add_performance_evaluation(self, evaluation: str) -> None:
         """
-        Add a performance evaluation item to the performance_evaluation list.
+        向性能评估列表中添加性能评估项
 
         Args:
             evaluation (str): The evaluation item to be added.
@@ -98,7 +96,7 @@ class PromptGenerator:
 
     def _generate_numbered_list(self, items: list[Any], item_type="list") -> str:
         """
-        Generate a numbered list from given items based on the item_type.
+        根据给定的项目列表和项目类型（item_type）生成一个编号列表
 
         Args:
             items (list): A list of items to be numbered.
@@ -118,8 +116,7 @@ class PromptGenerator:
 
     def generate_prompt_string(self) -> str:
         """
-        Generate a prompt string based on the constraints, commands, resources,
-            and performance evaluations.
+        根据约束、命令、资源和性能评估生成提示字符串.
 
         Returns:
             str: The generated prompt string.

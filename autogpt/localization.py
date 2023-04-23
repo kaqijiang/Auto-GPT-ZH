@@ -145,6 +145,8 @@ def my_open(orig_open, *args, **kwargs):
         return orig_open(*args, encoding='utf-8', **kwargs)
 
 def hook_open():
+    global hooked_open
+
     if not hooked_open:
         orig_open = open
         builtins.open = lambda *args, **kwargs: my_open(orig_open, *args, **kwargs)

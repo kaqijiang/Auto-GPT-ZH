@@ -1,4 +1,6 @@
 import builtins
+import unittest
+import json
 
 
 hooked_open = False
@@ -100,23 +102,29 @@ def fix_json_by_removing_preface(ai_resp: str) -> str:
     if not ai_resp or not isinstance(ai_resp, str):
         return ai_resp
     count = 0
-    escaped = False
-    start = -1
-    end = -1
+    escaped = in_str = False
+    start = end = -1
     for i, c in enumerate(ai_resp):
-        if c == '{' and not escaped:
-            if start == -1:
-                start = i
-            count += 1
-        elif c == '}' and not escaped:
-            count -= 1
-            if count == 0:
-                end = i
-                break
-        escaped = c == '\\'
-    if start == -1 or end == -1:
+        if escaped:  # ignore the escaped char
+            escaped = False
+        elif c == '\\':  # ignore next char
+            escaped = True
+        elif c == '"':  # ignore quotes in the preface
+            in_str = not in_str  # toggle in_str
+        elif not in_str:  # ignore brackets inside strings
+            if c == '{':
+                if start == -1:
+                    start = i  # found the first left bracket
+                count += 1  # count left brackets
+            elif c == '}':
+                count -= 1  # count right brackets
+                if count == 0:  # a complete json object is found
+                    end = i  # take down the pos of the corresponding right bracket
+                    break
+    if start == -1 or end == -1:  # no valid json object found
         return ai_resp
-    return ai_resp[start:end + 1]
+    else:
+        return ai_resp[start:end + 1]
 
 
 def fix_json_by_removing_newline_in_values(ai_resp: str) -> str:
@@ -124,16 +132,299 @@ def fix_json_by_removing_newline_in_values(ai_resp: str) -> str:
     if not ai_resp or not isinstance(ai_resp, str):
         return ai_resp
     buff = ''
-    in_str = False
-    escaped = False
+    escaped = in_str = False
     for c in ai_resp:
-        if c == '"' and not escaped:
-            in_str = not in_str
-        elif c == '\n' and in_str:
-            c = '\\n'
+        if c == '"':
+            if not escaped:  # ignore escaped quotes
+                in_str = not in_str  # toggle in_str
+        elif c == '\n':
+            if in_str:  # if found a newline in a string
+                c = '\\n'  # replace it with an escaped newline
         buff += c
-        escaped = c == '\\'
+        escaped = c == '\\' and not escaped  # check if the next char should be escaped
     return buff
+
+
+class JSONFixTest(unittest.TestCase):
+    def test_remove_preface(self):
+        # Test that the preface is removed correctly
+        good_resp = '''\
+I want to use `google` command to search more information about `XXX`.
+
+{
+    "command": {
+        "name": "google",
+        "args": {
+            "query": "XXX"
+        }
+    },
+    "thoughts": {}
+}
+'''
+        good_obj = {
+            "command": {
+                "name": "google",
+                "args": {
+                    "query": "XXX"
+                }
+            },
+            "thoughts": {}
+        }
+
+        no_json = '''\
+I want to use `google` command to search more information about `XXX`.
+'''
+        no_preface = '''\
+{
+    "command": {
+        "name": "google",
+        "args": {
+            "query": "XXX"
+        }
+    },
+    "thoughts": {}
+}
+'''
+
+        truncated_resp = '''\
+I want to use `google` command to search more information about `XXX`.
+
+{
+    "command": {
+    }
+'''
+
+        multiple_json_resp = '''\
+{
+    "command": {
+        "name": "XXX",
+        "args": {}
+    },
+    "thoughts": {}
+}
+
+{
+    "command": {
+        "name": "blah",
+        "args": {}
+    },
+    "thoughts": {}
+}
+'''
+        first_obj = {
+            "command": {
+                "name": "XXX",
+                "args": {}
+            },
+            "thoughts": {}
+        }
+
+        bad_syntax_resp = '''\
+Some text.
+
+{
+    command: {},
+    thoughts: {}
+}
+'''
+
+        bad_syntax_resp_1 = '''\
+{
+    "command": {
+        "name": "XXX"",
+        "args": {}
+    },
+    "thoughts": {}
+}
+'''
+
+        self.assertEqual(json.loads(fix_json_by_removing_preface(good_resp)), good_obj)
+        self.assertEqual(fix_json_by_removing_preface(no_json), no_json)  # no change
+        self.assertEqual(json.loads(fix_json_by_removing_preface(no_preface)), good_obj)
+        self.assertEqual(fix_json_by_removing_preface(truncated_resp), truncated_resp)  # no change
+        self.assertEqual(json.loads(fix_json_by_removing_preface(multiple_json_resp)), first_obj)
+        with self.assertRaises(json.decoder.JSONDecodeError):
+            json.loads(fix_json_by_removing_preface(bad_syntax_resp))
+        with self.assertRaises(json.decoder.JSONDecodeError):
+            json.loads(fix_json_by_removing_preface(bad_syntax_resp_1))
+
+    def test_ignore_quotes_in_preface(self):
+        # Test that quotes in the preface are ignored
+        ai_resp = '''\
+I see, "{1, 2, 3}" is a set instead of a list.
+
+{
+    "command": {
+        "name": "write_to_file",
+        "args": {
+            "file_path": "test.txt",
+            "text": "XXX"
+        }
+    },
+    "thoughts": {}
+}
+'''
+        good_obj = {
+            "command": {
+                "name": "write_to_file",
+                "args": {
+                    "file_path": "test.txt",
+                    "text": "XXX"
+                }
+            },
+            "thoughts": {}
+        }
+
+        self.assertEqual(json.loads(fix_json_by_removing_preface(ai_resp)), good_obj)
+
+    def test_extracting_json_from_preface(self):
+        good_resp = '''\
+My reply would be { "sth": "blabla" }, what about yours?
+'''
+        good_obj = {
+            "sth": "blabla"
+        }
+
+        self.assertEqual(json.loads(fix_json_by_removing_preface(good_resp)), good_obj)
+
+    def test_escaping_in_string(self):
+        escaping_string = '''\
+This is a preface.
+
+{
+    "command": {
+        "name": "XXX",
+        "args": {
+            "blabla": "if you count brackets in a string like this: \\"}}}\\", you are doing it wrong"
+        }
+    },
+    "thoughts": {}
+}
+'''
+        escaping_string_obj = {
+            "command": {
+                "name": "XXX",
+                "args": {
+                    "blabla": "if you count brackets in a string like this: \"}}}\", you are doing it wrong"
+                }
+            },
+            "thoughts": {}
+        }
+
+        escaping_slashes = '''\
+This is a preface.
+
+{
+    "command": {
+        "name": "XXX",
+        "args": {
+            "blabla": "aaa\\\\bbb\\\\nccc\\nddd"
+        }
+    },
+    "thoughts": {}
+}
+'''
+
+        escaping_slashes_obj = {
+            "command": {
+                "name": "XXX",
+                "args": {
+                    "blabla": "aaa\\bbb\\nccc\nddd"
+                }
+            },
+            "thoughts": {}
+        }
+
+        self.assertEqual(json.loads(fix_json_by_removing_preface(escaping_string)), escaping_string_obj)
+        self.assertEqual(json.loads(fix_json_by_removing_preface(escaping_slashes)), escaping_slashes_obj)
+
+    def test_escaping_newline_in_string(self):
+        already_a_good_json = '''\
+{
+    "command": {
+        "name": "XXX",
+        "args": {
+            "blabla": "blah"
+        }
+    }
+}
+'''
+        good_obj = {
+            "command": {
+                "name": "XXX",
+                "args": {
+                    "blabla": "blah"
+                }
+            }
+        }
+
+        newline_in_value = '''\
+{
+    "command": {
+        "name": "XXX",
+        "args": {
+            "blabla": "blah\nblah"
+        }
+    }
+}
+'''
+        correct_obj = {
+            "command": {
+                "name": "XXX",
+                "args": {
+                    "blabla": "blah\nblah"
+                }
+            }
+        }
+
+        embedded_escaped_string_in_value_with_newline = '''\
+{
+    "command": {
+        "name": "XXX",
+        "args": {
+            "blabla": "aaa\\"sth\nbla\\nbla\nelse\\"bbb"
+        }
+    }
+}
+'''
+
+        embedded_escaped_string_in_value_with_newline_correct_obj = {
+            "command": {
+                "name": "XXX",
+                "args": {
+                    "blabla": "aaa\"sth\nbla\nbla\nelse\"bbb"
+                }
+            }
+        }
+
+        escaping_backslash = '''\
+{
+    "command": {
+        "name": "XXX",
+        "args": {
+            "blabla": "aaa\\\\nsth\\\\bbb\\"\\\\ccc\\\\nddd\\"eee"
+        }
+    }
+}
+'''
+        escaping_backslash_correct_obj = {
+            "command": {
+                "name": "XXX",
+                "args": {
+                    "blabla": "aaa\\nsth\\bbb\"\\ccc\\nddd\"eee"
+                }
+            }
+        }
+
+        self.assertEqual(json.loads(fix_json_by_removing_newline_in_values(already_a_good_json)), good_obj)
+
+        # normally would crash without the fix
+        self.assertEqual(json.loads(fix_json_by_removing_newline_in_values(newline_in_value)), correct_obj)
+
+        self.assertEqual(json.loads(fix_json_by_removing_newline_in_values(
+            embedded_escaped_string_in_value_with_newline)), embedded_escaped_string_in_value_with_newline_correct_obj)
+        self.assertEqual(json.loads(fix_json_by_removing_newline_in_values(
+                            escaping_backslash)), escaping_backslash_correct_obj)
 
 
 def my_open(orig_open, *args, **kwargs):
@@ -144,6 +435,7 @@ def my_open(orig_open, *args, **kwargs):
     else:
         return orig_open(*args, encoding='utf-8', **kwargs)
 
+
 def hook_open():
     global hooked_open
 
@@ -151,3 +443,7 @@ def hook_open():
         orig_open = open
         builtins.open = lambda *args, **kwargs: my_open(orig_open, *args, **kwargs)
         hooked_open = True
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -102,10 +102,14 @@ def map_command_synonyms(command_name: str):
         ("create_file", "write_to_file"),
         ("search", "google"),
     ]
-    for seen_command, actual_command_name in synonyms:
-        if command_name == seen_command:
-            return actual_command_name
-    return command_name
+    return next(
+        (
+            actual_command_name
+            for seen_command, actual_command_name in synonyms
+            if command_name == seen_command
+        ),
+        command_name,
+    )
 
 
 def execute_command(command_name: str, arguments):
@@ -126,8 +130,7 @@ def execute_command(command_name: str, arguments):
             # search method
             key = CFG.google_api_key
             if key and key.strip() and key != "your-google-api-key":
-                google_result = google_official_search(arguments["input"])
-                return google_result
+                return google_official_search(arguments["input"])
             else:
                 google_result = google_search(arguments["input"])
 
@@ -173,14 +176,13 @@ def execute_command(command_name: str, arguments):
         elif command_name == "search_files":
             return search_files(arguments["directory"])
         elif command_name == "download_file":
-            if not CFG.allow_downloads:
-                return "Error: You do not have user authorization to download files locally."
-            return download_file(arguments["url"], arguments["file"])
+            return (
+                download_file(arguments["url"], arguments["file"])
+                if CFG.allow_downloads
+                else "Error: You do not have user authorization to download files locally."
+            )
         elif command_name == "browse_website":
             return browse_website(arguments["url"], arguments["question"])
-        # TODO: Change these to take in a file rather than pasted code, if
-        # non-file is given, return instructions "Input should be a python
-        # filepath, write your code to file and try again"
         elif command_name == "analyze_code":
             return analyze_code(arguments["code"])
         elif command_name == "improve_code":
@@ -256,7 +258,7 @@ def get_hyperlinks(url: str) -> Union[str, List[str]]:
 
 def shutdown() -> NoReturn:
     """Shut down the program"""
-    print("Shutting down...")
+    print("关闭中...")
     quit()
 
 
@@ -313,7 +315,7 @@ def list_agents():
         str: A list of all agents
     """
     return "List of agents:\n" + "\n".join(
-        [str(x[0]) + ": " + x[1] for x in AGENT_MANAGER.list_agents()]
+        [f"{str(x[0])}: {x[1]}" for x in AGENT_MANAGER.list_agents()]
     )
 
 

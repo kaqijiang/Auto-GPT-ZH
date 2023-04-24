@@ -104,11 +104,14 @@ def fix_json_by_removing_preface(ai_resp: str) -> str:
     start = -1
     end = -1
     for i, c in enumerate(ai_resp):
-        if c == '{' and not escaped:
+        if escaped:
+            escaped = False
+            continue
+        if c == '{':
             if start == -1:
                 start = i
             count += 1
-        elif c == '}' and not escaped:
+        elif c == '}':
             count -= 1
             if count == 0:
                 end = i
@@ -116,7 +119,8 @@ def fix_json_by_removing_preface(ai_resp: str) -> str:
         escaped = c == '\\'
     if start == -1 or end == -1:
         return ai_resp
-    return ai_resp[start:end + 1]
+    else:
+        return ai_resp[start:end + 1]
 
 
 def fix_json_by_removing_newline_in_values(ai_resp: str) -> str:
@@ -132,7 +136,7 @@ def fix_json_by_removing_newline_in_values(ai_resp: str) -> str:
         elif c == '\n' and in_str:
             c = '\\n'
         buff += c
-        escaped = c == '\\'
+        escaped = c == '\\' and not escaped
     return buff
 
 

@@ -28,18 +28,20 @@ def get_prompt() -> str:
 
     # Add constraints to the PromptGenerator object
     prompt_generator.add_constraint(
-        "短期内存限制为4000字左右。你的短期记忆是短暂的，所以立即将重要的信息保存到文件中。"
+        "~4000 word limit for short term memory. Your short term memory is short, so"
+        " immediately save important information to files."
     )
     prompt_generator.add_constraint(
-        "如果你不确定你以前是怎么做的，或者想回忆过去的事情，想想类似的事情会帮助你记忆。"
+        "If you are unsure how you previously did something or want to recall past"
+        " events, thinking about similar events will help you remember."
     )
-    prompt_generator.add_constraint("无用户协助")
-    prompt_generator.add_constraint("请在回复中文时本地化自然语言字符串")
+    prompt_generator.add_constraint("No user assistance")
+    prompt_generator.add_constraint("Please localize natural language strings in your reply to Chinese")
     prompt_generator.add_constraint(
-        '只使用双引号中列出的命令，例如: "command name"'
+        'Exclusively use the commands listed in double quotes e.g. "command name"'
     )
     prompt_generator.add_constraint(
-        "将子流程用于几分钟内不会终止的命令"
+        "Use subprocesses for commands that will not terminate within a few minutes"
     )
 
     # Define the command list
@@ -135,26 +137,28 @@ def get_prompt() -> str:
 
     # Add resources to the PromptGenerator object
     prompt_generator.add_resource(
-        "上网搜索和收集信息。"
+        "Internet access for searches and information gathering."
     )
-    prompt_generator.add_resource("长期记忆管理。")
+    prompt_generator.add_resource("Long Term memory management.")
     prompt_generator.add_resource(
-        "支持GPT-3.5的代理，用于委派简单的任务。"
+        "GPT-3.5 powered Agents for delegation of simple tasks."
     )
-    prompt_generator.add_resource("文件输出。")
+    prompt_generator.add_resource("File output.")
 
     # Add performance evaluations to the PromptGenerator object
     prompt_generator.add_performance_evaluation(
-        "不断地回顾和分析你的行动，以确保你发挥出了最大的能力。"
+        "Continuously review and analyze your actions to ensure you are performing to"
+        " the best of your abilities."
     )
     prompt_generator.add_performance_evaluation(
-        "不断地进行建设性的自我批评。"
+        "Constructively self-criticize your big-picture behavior constantly."
     )
     prompt_generator.add_performance_evaluation(
-        "反思过去的决策和策略，以改进你的方法。"
+        "Reflect on past decisions and strategies to refine your approach."
     )
     prompt_generator.add_performance_evaluation(
-        "每个命令都有成本，所以要聪明和高效。以最少的步骤完成任务为目标。"
+        "Every command has a cost, so be smart and efficient. Aim to complete tasks in"
+        " the least number of steps."
     )
 
     # Generate the prompt string

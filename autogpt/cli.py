@@ -128,7 +128,7 @@ def main(
         next_action_count = 0
         # Make a constant:
         triggering_prompt = (
-            "确定要使用哪个下一个命令，并使用上面指定的格式进行响应："
+            "确定要使用的下一个命令，并使用上面指定的JSON格式响应:"
         )
         # 初始化内存，并确保它是空的。这对于索引和引用内存（如Pinecone内存）尤为重要
         memory = get_memory(cfg, init=True)

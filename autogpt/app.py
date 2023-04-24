@@ -255,7 +255,7 @@ def get_hyperlinks(url: str) -> Union[str, List[str]]:
 
 def shutdown() -> NoReturn:
     """Shut down the program"""
-    print("Shutting down...")
+    print("关闭中...")
     quit()
 
 

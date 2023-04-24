@@ -59,9 +59,8 @@ class Agent:
             # 检查是否达到了连续模式的限制
             loop_count += 1
             if (
-                cfg.continuous_mode
-                and cfg.continuous_limit > 0
-                and loop_count > cfg.continuous_limit
+                    cfg.continuous_mode
+                    and 0 < cfg.continuous_limit < loop_count
             ):
                 logger.typewriter_log(
                     "连续达到限制: ", Fore.YELLOW, f"{cfg.continuous_limit}"

@@ -57,11 +57,11 @@ AutoGPT在接到这项任务之后，便开始了他的展示：
 
 1. 设置您的OpenAI [API密钥](https://platform.openai.com/account/api-keys)
 2. 下载[最新版本](https://github.com/kaqijiang/Auto-GPT-ZH/releases/latest)
-3. 安装[依赖项](https://github.com/Significant-Gravitas/Auto-GPT/blob/master/docs/installation.md)并设置[环境变量](https://github.com/Significant-Gravitas/Auto-GPT/blob/master/docs/installation.md)
-4. [运行](https://github.com/Significant-Gravitas/Auto-GPT/blob/master/docs/usage.md)应用程序
+3. 安装[依赖项](./docs/安装方法.md)并设置[环境变量](./docs/安装方法.md)
+4. [运行](./docs/使用方法.md)应用程序
 5. 如果报错包含http 和 443 字样请查看[终端代理设置](./docs/终端代理.md)。
 
-有关完整的设置说明和配置选项，请参阅以下链接的[文档](https://github.com/Significant-Gravitas/Auto-GPT/blob/master/docs)。
+有关完整的设置说明和配置选项，请参阅以下的文档。
 
 ## 💾 使用文档
 

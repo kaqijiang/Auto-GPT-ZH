@@ -126,7 +126,8 @@ def execute_command(command_name: str, arguments):
             # search method
             key = CFG.google_api_key
             if key and key.strip() and key != "your-google-api-key":
-                return google_official_search(arguments["input"])
+                google_result = google_official_search(arguments["input"])
+                return google_result
             else:
                 google_result = google_search(arguments["input"])
 
@@ -255,7 +256,7 @@ def get_hyperlinks(url: str) -> Union[str, List[str]]:
 
 def shutdown() -> NoReturn:
     """Shut down the program"""
-    print("关闭中...")
+    print("Shutting down...")
     quit()
 
 

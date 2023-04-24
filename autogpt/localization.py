@@ -54,8 +54,7 @@ cmd_arg_tr: dict[str, str] = {
     'name': '名称',
     'agent_type': '代理人类型',
     'repository_url': '仓库网址',
-    'query': '搜索词',
-    'reason': '原因',
+    'query': '搜索词'
 }
 
 mem_type_tr: dict[str, str] = {

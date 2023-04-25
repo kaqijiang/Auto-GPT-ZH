@@ -54,7 +54,8 @@ cmd_arg_tr: dict[str, str] = {
     'name': '名称',
     'agent_type': '代理人类型',
     'repository_url': '仓库网址',
-    'query': '搜索词'
+    'query': '搜索词',
+    'reason': '原因',
 }
 
 mem_type_tr: dict[str, str] = {
@@ -121,10 +122,7 @@ def fix_json_by_removing_preface(ai_resp: str) -> str:
                 if count == 0:  # a complete json object is found
                     end = i  # take down the pos of the corresponding right bracket
                     break
-    if start == -1 or end == -1:  # no valid json object found
-        return ai_resp
-    else:
-        return ai_resp[start:end + 1]
+    return ai_resp if start == -1 or end == -1 else ai_resp[start:end + 1]
 
 
 def fix_json_by_removing_newline_in_values(ai_resp: str) -> str:

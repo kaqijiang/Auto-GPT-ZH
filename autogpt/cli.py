@@ -1,10 +1,8 @@
 """Main script for the autogpt package."""
 import click
-from autogpt.localization import translate_memory_type
-
 
 @click.group(invoke_without_command=True)
-@click.option("-c", "--continuous", is_flag=True, help="启用连续模式")
+@click.option("-c", "--continuous", is_flag=True, help="Enable Continuous Mode")
 @click.option(
     "--skip-reprompt",
     "-y",
@@ -48,6 +46,19 @@ from autogpt.localization import translate_memory_type
     is_flag=True,
     help="指定是否在启动时不输出最新的消息.",
 )
+@click.option(
+    # TODO: this is a hidden option for now, necessary for integration testing.
+    #   We should make this public once we're ready to roll out agent specific workspaces.
+    "--workspace-directory",
+    "-w",
+    type=click.Path(),
+    hidden=True,
+)
+@click.option(
+    "--install-plugin-deps",
+    is_flag=True,
+    help="安装第三方插件的外部依赖。",
+)
 @click.pass_context
 def main(
     ctx: click.Context,
@@ -63,31 +74,19 @@ def main(
     browser_name: str,
     allow_downloads: bool,
     skip_news: bool,
+    workspace_directory: str,
+    install_plugin_deps: bool,
 ) -> None:
     """
-    欢迎使用AutoGPT，这是一个实验性的开源应用程序，展示了GPT-4的能力，推动了人工智能的界限。
+    Welcome to AutoGPT an experimental open-source application showcasing the capabilities of the GPT-4 pushing the boundaries of AI.
 
-    启动一个Auto-GPT助手。
+    Start an Auto-GPT assistant.
     """
     # Put imports inside function to avoid importing everything when starting the CLI
-    import logging
-    import sys
-
-    from colorama import Fore
-
-    from autogpt.agent.agent import Agent
-    from autogpt.config import Config, check_openai_api_key
-    from autogpt.configurator import create_config
-    from autogpt.logs import logger
-    from autogpt.memory import get_memory
-    from autogpt.prompt import construct_prompt
-    from autogpt.utils import get_current_git_branch, get_latest_bulletin
+    from autogpt.main import run_auto_gpt
 
     if ctx.invoked_subcommand is None:
-        cfg = Config()
-        # TODO: fill in llm values here
-        check_openai_api_key()
-        create_config(
+        run_auto_gpt(
             continuous,
             continuous_limit,
             ai_settings,
@@ -100,53 +99,9 @@ def main(
             browser_name,
             allow_downloads,
             skip_news,
+            workspace_directory,
+            install_plugin_deps,
         )
-        # 配置日志记录和设置，如设置日志级别、创建配置文件等
-        logger.set_level(logging.DEBUG if cfg.debug_mode else logging.INFO)
-        ai_name = ""
-        if not cfg.skip_news:
-            # motd = get_latest_bulletin()
-            # if motd:
-            #     logger.typewriter_log("NEWS: ", Fore.GREEN, motd)
-            git_branch = get_current_git_branch()
-            # if git_branch and git_branch != "stable":
-            #     logger.typewriter_log(
-            #         "警告：",
-            #         Fore.RED,
-            #         f"您正在运行 {git_branch} 分支 - 这不是受支持的分支。",
-            #     )
-            if sys.version_info < (3, 10):
-                logger.typewriter_log(
-                    "警告：",
-                    Fore.RED,
-                    "您正在运行旧版本的Python。某些人使用此版本会观察到Auto-GPT某些部分出现问题。请考虑升级到Python 3.10或更高版本。",
-                )
-        system_prompt = construct_prompt()
-        # print(prompt)
-        # 初始化一些变量，例如消息历史记录、下一个动作计数等
-        full_message_history = []
-        next_action_count = 0
-        # Make a constant:
-        triggering_prompt = (
-            "确定要使用的下一个命令，并使用上面指定的JSON格式响应:"
-        )
-        # 初始化内存，并确保它是空的。这对于索引和引用内存（如Pinecone内存）尤为重要
-        memory = get_memory(cfg, init=True)
-        logger.typewriter_log(
-            "使用记忆类型:", Fore.GREEN, f"{translate_memory_type(memory.__class__.__name__)}"
-        )
-        logger.typewriter_log("使用浏览器:", Fore.GREEN, cfg.selenium_web_browser)
-        # 根据配置创建一个Agent实例，用于处理与用户的交互
-        agent = Agent(
-            ai_name=ai_name,
-            memory=memory,
-            full_message_history=full_message_history,
-            next_action_count=next_action_count,
-            system_prompt=system_prompt,
-            triggering_prompt=triggering_prompt,
-        )
-        # 启动交互循环，使用户可以与AutoGPT应用程序进行交互
-        agent.start_interaction_loop()
 
 
 if __name__ == "__main__":

@@ -1,3 +1,4 @@
+import re
 import sys
 
 import pkg_resources
@@ -16,16 +17,16 @@ def main():
     for package in required_packages:
         if not package:  # Skip empty lines
             continue
-        package_name = package.strip().split("==")[0]
+        package_name = re.split("[<>=@ ]+", package.strip())[0]
         if package_name.lower() not in installed_packages:
             missing_packages.append(package_name)
 
     if missing_packages:
-        print("Missing packages:")
+        print("丢失的包:")
         print(", ".join(missing_packages))
         sys.exit(1)
     else:
-        print("All packages are installed.")
+        print("所有的包都安装好了")
 
 
 if __name__ == "__main__":

@@ -11,10 +11,9 @@ from regex import regex
 
 from autogpt.config import Config
 from autogpt.json_utils.json_fix_general import correct_json
-from autogpt.llm_utils import call_ai_function
+from autogpt.llm import call_ai_function
 from autogpt.logs import logger
 from autogpt.speech import say_text
-from autogpt.localization import fix_json_by_removing_preface, fix_json_by_removing_newline_in_values
 
 JSON_SCHEMA = """
 {
@@ -92,19 +91,38 @@ def fix_json_using_multiple_techniques(assistant_reply: str) -> Dict[Any, Any]:
     Returns:
         str: The fixed JSON string.
     """
+    assistant_reply = assistant_reply.strip()
+    if assistant_reply.startswith("```json"):
+        assistant_reply = assistant_reply[7:]
+    if assistant_reply.endswith("```"):
+        assistant_reply = assistant_reply[:-3]
+    try:
+        return json.loads(assistant_reply)  # just check the validity
+    except json.JSONDecodeError:  # noqa: E722
+        pass
+
+    if assistant_reply.startswith("json "):
+        assistant_reply = assistant_reply[5:]
+        assistant_reply = assistant_reply.strip()
+    try:
+        return json.loads(assistant_reply)  # just check the validity
+    except json.JSONDecodeError:  # noqa: E722
+        pass
 
     # Parse and print Assistant response
     assistant_reply_json = fix_and_parse_json(assistant_reply)
+    logger.debug("Assistant reply JSON: %s", str(assistant_reply_json))
     if assistant_reply_json == {}:
         assistant_reply_json = attempt_to_fix_json_by_finding_outermost_brackets(
             assistant_reply
         )
 
+    logger.debug("Assistant reply JSON 2: %s", str(assistant_reply_json))
     if assistant_reply_json != {}:
         return assistant_reply_json
 
     logger.error(
-        "Error: 以下 AI 输出无法转换为 JSON:\n",
+        "Error: The following AI output couldn't be converted to a JSON:\n",
         assistant_reply,
     )
     if CFG.speak_mode:
@@ -126,8 +144,6 @@ def fix_and_parse_json(
     Returns:
         str or dict[Any, Any]: The parsed JSON.
     """
-    json_to_load = fix_json_by_removing_preface(json_to_load)
-    json_to_load = fix_json_by_removing_newline_in_values(json_to_load)
 
     with contextlib.suppress(json.JSONDecodeError):
         json_to_load = json_to_load.replace("\t", "")
@@ -205,7 +221,7 @@ def attempt_to_fix_json_by_finding_outermost_brackets(json_string: str):
             # Extract the valid JSON object from the string
             json_string = json_match.group(0)
             logger.typewriter_log(
-                title="似乎修复了 JSON.", title_color=Fore.GREEN
+                title="Apparently json was fixed.", title_color=Fore.GREEN
             )
             if CFG.speak_mode and CFG.debug_mode:
                 say_text("Apparently json was fixed.")

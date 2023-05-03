@@ -55,7 +55,9 @@ cmd_arg_tr: dict[str, str] = {
     'agent_type': '代理人类型',
     'repository_url': '仓库网址',
     'query': '搜索词',
-    'reason': '原因',
+    'create_directory': '创建目录',
+    'directory_name': '目录名称'
+    
 }
 
 mem_type_tr: dict[str, str] = {
@@ -74,7 +76,7 @@ def translate_command_args(args: dict[str, str]) -> dict[str, str]:
     ret = args.copy()
     for k in args.keys():
         if (tr_k := cmd_arg_tr.get(k, None)) is None:
-            print(f'警告: 参数名 \'{k}\' 未汉化')
+            # print(f'警告: 参数名 \'{k}\' 未汉化')
             continue
         ret[tr_k] = ret.pop(k)
     return ret
@@ -84,7 +86,7 @@ def translate_command(cmd: str) -> str:
     if not cmd or not isinstance(cmd, str):
         return cmd
     if (ret := cmd_tr.get(cmd, None)) is None:
-        print(f'警告: 指令 \'{cmd}\' 未汉化')
+        # print(f'警告: 指令 \'{cmd}\' 未汉化')
         return cmd
     return ret
 
@@ -93,7 +95,7 @@ def translate_memory_type(mem_type: str) -> str:
     if not mem_type or not isinstance(mem_type, str):
         return mem_type
     if (ret := mem_type_tr.get(mem_type, None)) is None:
-        print(f'警告: 记忆类型 \'{mem_type}\' 未汉化')
+        # print(f'警告: 记忆类型 \'{mem_type}\' 未汉化')
         return mem_type
     return ret
 
@@ -122,7 +124,10 @@ def fix_json_by_removing_preface(ai_resp: str) -> str:
                 if count == 0:  # a complete json object is found
                     end = i  # take down the pos of the corresponding right bracket
                     break
-    return ai_resp if start == -1 or end == -1 else ai_resp[start:end + 1]
+    if start == -1 or end == -1:  # no valid json object found
+        return ai_resp
+    else:
+        return ai_resp[start:end + 1]
 
 
 def fix_json_by_removing_newline_in_values(ai_resp: str) -> str:

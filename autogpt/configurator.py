@@ -104,31 +104,31 @@ def create_config(
         # Validate file
         (validated, message) = utils.validate_yaml_file(file)
         if not validated:
-            logger.typewriter_log("FAILED FILE VALIDATION", Fore.RED, message)
+            logger.typewriter_log("文件验证失败", Fore.RED, message)
             logger.double_check()
             exit(1)
 
-        logger.typewriter_log("Using AI Settings File:", Fore.GREEN, file)
+        logger.typewriter_log("使用 AI 设置文件:", Fore.GREEN, file)
         CFG.ai_settings_file = file
         CFG.skip_reprompt = True
+
+    if browser_name:
+        CFG.selenium_web_browser = browser_name
 
     if allow_downloads:
         logger.typewriter_log("Native Downloading:", Fore.GREEN, "ENABLED")
         logger.typewriter_log(
             "WARNING: ",
             Fore.YELLOW,
-            f"{Back.LIGHTYELLOW_EX}Auto-GPT will now be able to download and save files to your machine.{Back.RESET} "
-            + "It is recommended that you monitor any files it downloads carefully.",
+            f"{Back.LIGHTYELLOW_EX}Auto-GPT 现在可以下载文件并将其保存到您的机器上。{Back.RESET} "
+             + "建议您仔细监控它下载的所有文件。",
         )
         logger.typewriter_log(
             "WARNING: ",
             Fore.YELLOW,
-            f"{Back.RED + Style.BRIGHT}ALWAYS REMEMBER TO NEVER OPEN FILES YOU AREN'T SURE OF!{Style.RESET_ALL}",
+            f"{Back.RED + Style.BRIGHT}永远记住永远不要打开您不确定的文件！{Style.RESET_ALL}",
         )
         CFG.allow_downloads = True
 
     if skip_news:
         CFG.skip_news = True
-
-    if browser_name:
-        CFG.selenium_web_browser = browser_name

@@ -175,10 +175,9 @@ def create_chat_completion(
                 f"{Fore.RED}Error: ", f"达到速率限制，通过...{Fore.RESET}"
             )
             if not warned_user:
-                logger.double_check(
-                    f"请仔细检查您是否设置了 {Fore.CYAN + Style.BRIGHT}PAID{Style.RESET_ALL} OpenAI API 帐户. "
-                    + f"公众号《阿杰的人生路》回复AI加入群聊寻求帮助"
-                )
+                # logger.double_check(
+                #     f"请仔细检查您是否设置了 {Fore.CYAN + Style.BRIGHT}PAID{Style.RESET_ALL} OpenAI API 帐户. "
+                # )
                 warned_user = True
         except (APIError, Timeout) as e:
             if e.http_status != 502:
@@ -191,12 +190,11 @@ def create_chat_completion(
         )
         time.sleep(backoff)
     if response is None:
-        logger.typewriter_log(
-            "未能获得 OPENAI 的回应",
-            Fore.RED,
-            "Auto-GPT 未能从 OpenAI 的服务中得到响应。 "
-            + f"公众号《阿杰的人生路》回复AI加入群聊寻求帮助",
-        )
+        # logger.typewriter_log(
+        #     "未能获得 OPENAI 的回应",
+        #     Fore.RED,
+        #     "Auto-GPT 未能从 OpenAI 的服务中得到响应。 ",
+        # )
         logger.double_check()
         if cfg.debug_mode:
             raise RuntimeError(f"Failed to get response after {num_retries} retries")

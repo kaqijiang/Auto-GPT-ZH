@@ -89,16 +89,16 @@ def update_running_summary(
     if len(new_events) == 0:
         new_events = "Nothing new happened."
 
-    prompt = f'''Your task is to create a concise running summary of actions and information results in the provided text, focusing on key and potentially important information to remember.
+    prompt = f'''你的任务是在提供的文本中创建一个简明的运行摘要，重点是关键和潜在重要的信息以供记忆.
 
-You will receive the current summary and the your latest actions. Combine them, adding relevant key information from the latest development in 1st person past tense and keeping the summary concise.
+您将会收到当前的摘要和您最新的操作。将它们结合起来，从最新的发展中加入相关的关键信息，使用第一人称过去时，并保持摘要简明。
 
-Summary So Far:
+到目前为止的摘要：
 """
 {current_memory}
 """
 
-Latest Development:
+最新的进展：
 """
 {new_events}
 """
@@ -115,7 +115,7 @@ Latest Development:
 
     message_to_return = {
         "role": "system",
-        "content": f"This reminds you of these events from your past: \n{current_memory}",
+        "content": f"这让你想起了过去的这些事件: \n{current_memory}",
     }
 
     return message_to_return

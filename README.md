@@ -16,6 +16,10 @@
 
 诚邀你参与我们。https://nhrvt0kw31.feishu.cn/wiki/TjZuwJtnfisaqwkRtI4cDQyVngb
 
+### 无需部署中文网页版欢迎体验
+
+https://www.autogpt-zh.com/
+
 ### 中文版Demo :
 
 ![Demo video](docs/imgs/demo.gif)

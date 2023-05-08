@@ -9,12 +9,7 @@
 推荐工具：[【稳定，高速梯子推荐56一年，活动时5折，点击直达】](https://www.hjtnt.pro/auth/register?code=hwWF)
 
 ### 开源专栏推荐，欢迎你的加入
-
-我是阿杰，一个热爱AI和自媒体的程序员。本着开源精神我创建了**如何使用AI工作学习创作的专栏**，用来与大家一起，共同学习，用AI工具来工作、学习、创作，提升我们个人能力和工作效率，让我们从繁杂的日常工作中解脱出来，开拓创新，让AI变身我们日常生活、工作中的辅助工具。
-
-专栏将在飞书文档持续更新，而且是完全免费的。可以放心分享给你微信置顶的每一个人。
-
-诚邀你参与我们。https://nhrvt0kw31.feishu.cn/wiki/TjZuwJtnfisaqwkRtI4cDQyVngb
+[【学习使用ChatGPT MidJourney 助力工作学习创作】](https://github.com/kaqijiang/SutdyChatGPT)
 
 ### 无需部署中文网页版欢迎体验
 

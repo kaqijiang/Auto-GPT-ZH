@@ -4,7 +4,7 @@
 
 <img src="docs/imgs/gzh.png" width="400">
 
-### 公众号<阿杰的人生路>回复"Auto-GPT"加入群聊，共同探讨更多玩法
+### 公众号<阿杰与AI>回复"Auto-GPT"加入群聊，共同探讨更多玩法
 
 推荐工具：[【稳定，高速梯子推荐56一年，活动时5折，点击直达】](https://www.hjtnt.pro/auth/register?code=hwWF)
 

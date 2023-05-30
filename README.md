@@ -15,12 +15,6 @@
 
 https://www.autogpt-zh.com/
 
-### 免费获取API-Key和ChatGPT账号
-分享一个可以免费获取API-Key和ChatGPT账号网站
-
-<a href="https://fxyu.djsopenai.com/" target="_blank">
-  <img src="./docs/imgs/yxq.png" width="300">
-</a>
 
 ### 中文版Demo :
 

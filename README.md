@@ -6,8 +6,6 @@
 
 ### 公众号<阿杰与AI>回复"Auto-GPT"加入群聊，共同探讨更多玩法
 
-推荐工具：[【稳定，高速梯子推荐56一年，活动时5折，点击直达】](https://www.hjtnt.pro/auth/register?code=hwWF)
-
 ### 开源专栏推荐，欢迎你的加入
 [【学习使用ChatGPT MidJourney 助力工作学习创作】](https://github.com/kaqijiang/SutdyChatGPT)
 

@@ -257,3 +257,5 @@ REST API：8006
 - [详细文档](https://docs.agpt.co)
 - [贡献指南](CONTRIBUTING.md)
 - [API 参考](https://docs.agpt.co/api)
+
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")

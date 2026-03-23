@@ -1,5 +1,6 @@
 import ast
 import logging
+import re
 from abc import ABC
 from enum import Enum, EnumMeta
 from json import JSONDecodeError
@@ -38,6 +39,7 @@ fmt = TextFormatter()
 LLMProviderName = Literal[
     ProviderName.ANTHROPIC,
     ProviderName.GROQ,
+    ProviderName.MINIMAX,
     ProviderName.OLLAMA,
     ProviderName.OPENAI,
     ProviderName.OPEN_ROUTER,
@@ -123,6 +125,10 @@ class LlmModel(str, Enum, metaclass=LlmModelMeta):
     OLLAMA_LLAMA3_8B = "llama3"
     OLLAMA_LLAMA3_405B = "llama3.1:405b"
     OLLAMA_DOLPHIN = "dolphin-mistral:latest"
+    # MiniMax models
+    MINIMAX_M2_7 = "MiniMax-M2.7"
+    MINIMAX_M2_5 = "MiniMax-M2.5"
+    MINIMAX_M2_5_HIGHSPEED = "MiniMax-M2.5-highspeed"
     # OpenRouter models
     GEMINI_FLASH_1_5 = "google/gemini-flash-1.5"
     GROK_BETA = "x-ai/grok-beta"
@@ -194,6 +200,10 @@ MODEL_METADATA = {
     LlmModel.LLAMA3_8B: ModelMetadata("groq", 8192, None),
     LlmModel.MIXTRAL_8X7B: ModelMetadata("groq", 32768, None),
     LlmModel.DEEPSEEK_LLAMA_70B: ModelMetadata("groq", 128000, None),
+    # https://platform.minimaxi.com/document/models
+    LlmModel.MINIMAX_M2_7: ModelMetadata("minimax", 1000000, 65536),
+    LlmModel.MINIMAX_M2_5: ModelMetadata("minimax", 1000000, 16384),
+    LlmModel.MINIMAX_M2_5_HIGHSPEED: ModelMetadata("minimax", 204800, 16384),
     # https://ollama.com/library
     LlmModel.OLLAMA_LLAMA3_3: ModelMetadata("ollama", 8192, None),
     LlmModel.OLLAMA_LLAMA3_2: ModelMetadata("ollama", 8192, None),
@@ -531,6 +541,57 @@ def llm_call(
             raw_response=response.choices[0].message,
             prompt=prompt,
             response=response.choices[0].message.content or "",
+            tool_calls=tool_calls,
+            prompt_tokens=response.usage.prompt_tokens if response.usage else 0,
+            completion_tokens=response.usage.completion_tokens if response.usage else 0,
+        )
+    elif provider == "minimax":
+        tools_param = tools if tools else openai.NOT_GIVEN
+        client = openai.OpenAI(
+            base_url="https://api.minimax.io/v1",
+            api_key=credentials.api_key.get_secret_value(),
+        )
+        response_format = {"type": "json_object"} if json_format else openai.NOT_GIVEN
+        # MiniMax temperature must be in (0.0, 1.0]
+        temperature = max(0.01, 1.0)
+
+        response = client.chat.completions.create(
+            model=llm_model.value,
+            messages=prompt,  # type: ignore
+            response_format=response_format,  # type: ignore
+            max_tokens=max_tokens,
+            tools=tools_param,  # type: ignore
+            temperature=temperature,
+        )
+
+        if not response.choices:
+            raise ValueError("No response from MiniMax.")
+
+        if response.choices[0].message.tool_calls:
+            tool_calls = [
+                ToolContentBlock(
+                    id=tool.id,
+                    type=tool.type,
+                    function=ToolCall(
+                        name=tool.function.name,
+                        arguments=tool.function.arguments,
+                    ),
+                )
+                for tool in response.choices[0].message.tool_calls
+            ]
+        else:
+            tool_calls = None
+
+        response_text = response.choices[0].message.content or ""
+        # Strip MiniMax thinking tags if present
+        response_text = re.sub(
+            r"<think>.*?</think>\s*", "", response_text, flags=re.DOTALL
+        )
+
+        return LLMResponse(
+            raw_response=response.choices[0].message,
+            prompt=prompt,
+            response=response_text,
             tool_calls=tool_calls,
             prompt_tokens=response.usage.prompt_tokens if response.usage else 0,
             completion_tokens=response.usage.completion_tokens if response.usage else 0,

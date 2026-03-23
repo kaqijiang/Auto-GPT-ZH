@@ -84,6 +84,19 @@ Forge 是一个专门用于构建自定义 AI 代理的开发框架，它提供�
 >   - 如果要开发自己的 AI 代理：使用 Forge 工具包
 >   - 如果要在生产环境使用：选择平台版
 
+## 🤖 支持的 LLM 提供商
+
+AutoGPT 平台版支持以下 LLM 提供商：
+
+| 提供商 | 模型 | 环境变量 |
+|--------|------|----------|
+| OpenAI | GPT-4o, GPT-4 Turbo, GPT-3.5 Turbo, o3-mini, o1 | `OPENAI_API_KEY` |
+| Anthropic | Claude 3.5 Sonnet, Claude 3.5 Haiku, Claude 3 Haiku | `ANTHROPIC_API_KEY` |
+| Groq | Llama 3.3 70B, Llama 3.1 8B, Mixtral 8x7B, DeepSeek | `GROQ_API_KEY` |
+| [MiniMax](https://platform.minimaxi.com/) | MiniMax-M2.7 (1M context), MiniMax-M2.5, MiniMax-M2.5-highspeed | `MINIMAX_API_KEY` |
+| Open Router | Gemini, Grok, Mistral, Cohere, DeepSeek 等 | `OPEN_ROUTER_API_KEY` |
+| Ollama | Llama 3.3, Llama 3.2 等本地模型 | 无需 API Key |
+
 ## 🚀 快速开始
 
 ### 托管选项
